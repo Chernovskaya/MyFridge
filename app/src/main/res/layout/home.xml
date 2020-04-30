@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#3f8678">
+
+
+
+    <FrameLayout
+        android:layout_width="350dp"
+        android:layout_height="101dp"
+        android:layout_gravity="center"
+
+        >
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:id="@+id/kuku"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+        </HorizontalScrollView>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fragments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/shape3">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:padding="20dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/data"
+                android:layout_width="wrap_content"
+                android:background="@drawable/shape2"
+                android:layout_height="wrap_content"
+                android:text="fffffggggf"
+                android:paddingLeft="10dp"
+                android:textSize="30dp" />
+        </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentsss"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/shape4">
+        <ListView
+            android:id="@+id/listView2"
+            android:layout_width="match_parent"
+            android:divider="@null"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:paddingBottom="60dp"></ListView>
+
+
+    </FrameLayout>
+    </FrameLayout>
+</LinearLayout>

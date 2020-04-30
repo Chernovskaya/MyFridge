@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:paddingTop="10dp"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <EditText
+        android:drawableLeft="@drawable/search"
+        android:id="@+id/text2"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:descendantFocusability="beforeDescendants"
+        android:hint="Поиск продукта" />
+    <ListView
+        android:id="@+id/list"
+        android:divider="@null"
+        android:dividerHeight="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </ListView>
+</LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        app:backgroundTint="#FFFFFF"
+        android:src="@drawable/plus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="bottom|end"
+        />
+</FrameLayout>
+
+
+
+

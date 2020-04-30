@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="#7000"
+    android:id="@+id/fragment"
+    android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_back"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        >
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="263dp"
+            android:layout_gravity="left">
+
+            <ImageView
+                android:id="@+id/image"
+                android:src="@drawable/photo"
+                android:layout_width="181dp"
+                android:layout_height="175dp"
+                android:layout_gravity="center"
+                app:srcCompat="@color/colorbotton" />
+        </FrameLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="126dp"
+                    android:layout_gravity="center"
+                    android:hint="Введите название" />
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="дата изготовления"
+                    android:inputType="date" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/day"
+                        android:layout_width="134dp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="срок годности"
+                        android:inputType="number" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:text="дни"
+                        android:id="@+id/dayofmonth1"
+                        android:layout_height="match_parent"/>
+            </LinearLayout>
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:text="Ok" />
+            </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
