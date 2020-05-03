@@ -2,6 +2,9 @@ package com.example.a0102;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapRegionDecoder;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -23,6 +26,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.ListFragment;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,17 +38,18 @@ public class Add extends ListFragment{
     //настройки
     public static final String PREFERENCES = "mysettings";
     public static final String SIZE = "size";
+    public static final String LANGUAGE = "language";
     int size;
     SharedPreferences mSettings;
     ArrayList<Product> products = new ArrayList<Product>();
     MyAdapter adapter;
     MilkFragment frag2;
     FragmentTransaction fTrans;
-    String [] name={
-            "Грибы","Зелень","Кондитерские изделия","Крупы",
-            "Лапша","Масла","Молочная продукция","Морепродукты", "Мясные продукты",
-            "Мясо","Овощи","Орехи","Рыба","Сыры","Фрукты","Хлебобулочные изделия","Экзотические Фрукты",
-            "Ягоды","Яичные продукты"};
+    int i =0;
+    String [] name= new String[19];
+    String  st;
+    int k=0;
+    int lan;
     int [] image1 ={
             R.drawable.grib,R.drawable.greens, R.drawable.cake,R.drawable.rice,
             R.drawable.noodles,R.drawable.oil,R.drawable.milk,R.drawable.seafood,R.drawable.sosiska,
@@ -53,6 +60,50 @@ public class Add extends ListFragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+        if(mSettings.contains(SIZE)) {
+            size = mSettings.getInt(SIZE, 0);
+        }
+        else{
+            size=30;
+        }
+        mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+        if(mSettings.contains(LANGUAGE)) {
+            lan = mSettings.getInt(LANGUAGE, 0);
+        }
+        else{
+            lan=0;
+
+        }
+        if(lan==0){
+            st="pp.txt";
+        }
+        else{
+            st="ppa.txt";
+        }
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(
+                    new InputStreamReader(getActivity().getAssets().open(st), "UTF-8"));
+            String mLine;
+            while ((mLine = reader.readLine()) != null && k<=164) {
+                if (k>145){
+                name[i]=mLine.replace(",","");
+                i+=1;
+                }
+                k+=1;
+            }
+        } catch (IOException e) {
+
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+
+                }
+            }
+        }
         fillData();
         mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         if(mSettings.contains(SIZE)) {
@@ -71,6 +122,7 @@ public class Add extends ListFragment{
         View view = super.onCreateView(inflater, container, savedInstanceState);
         view.setBackgroundColor(Color.parseColor("#3f8678"));
         return view;
+
     }
 
 
@@ -86,13 +138,10 @@ public class Add extends ListFragment{
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-
-
             fTrans = getFragmentManager().beginTransaction();
             frag2 = new MilkFragment(position+1);
             fTrans.replace(R.id.fragments, frag2);
             fTrans.commit();
-
     }
 
 
@@ -102,6 +151,8 @@ public class Add extends ListFragment{
         Add fragment = new Add();
         return fragment;
     }
-    public Add() {}
+    public Add() {
+
+    }
 }
 

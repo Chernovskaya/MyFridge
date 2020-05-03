@@ -74,10 +74,8 @@ public class ObjectAdapter extends BaseAdapter {
         }
 
         final ItemProduct p = getProduct(position);
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 4;
-        Bitmap bitmap = BitmapFactory.decodeResource(ctx.getResources(), p.image1, options);
-        viewHolder.imageView.setImageBitmap(bitmap);
+
+        viewHolder.imageView.setImageResource(p.image1);
         viewHolder.nameView.setText(p.name1);
         viewHolder.nameView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, size);
         viewHolder.dayView.setText(p.days + " ");

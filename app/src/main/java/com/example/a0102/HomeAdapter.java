@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -27,6 +28,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -94,9 +97,13 @@ Context ctx;
 
        if(p.image1==666){
            try {
-               final InputStream imageStream = ctx.getContentResolver().openInputStream(Uri.parse(p.image2));
-               Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-               imageView.setImageBitmap(selectedImage);
+               ContextWrapper cw = new ContextWrapper(ctx);
+               File directory = cw.getDir(p.image2, Context.MODE_PRIVATE);
+               File mypath=new File(directory,p.image2);
+
+               File f=new File(mypath+"");
+               Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+               imageView.setImageBitmap(b);
            } catch (FileNotFoundException e) {
                e.printStackTrace();
            }

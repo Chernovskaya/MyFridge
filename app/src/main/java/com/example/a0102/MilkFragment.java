@@ -37,6 +37,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -64,15 +67,13 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
 
     DateFormat dateFormat;
 
-   int day;
+    int day;
     String dateText;
-   int imagee;
-
+    int imagee;
     int [] arrayimage;
     int [] days;
     int days1;
     String [] arrayname;
-
     String image;
     EditText mInputSearch;
     CreateProduct frag2;
@@ -87,9 +88,12 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
     LinearLayout view1;
     private int number;
     Calendar c1;
+    int lan;
     //настройки
     public static final String PREFERENCES = "mysettings";
     public static final String SIZE = "size";
+    public static final String LANGUAGE = "language";
+
     int size;
     SharedPreferences mSettings;
     Date dateOne;
@@ -98,6 +102,11 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
     int len1;
     int len2;
     int umnoj=1;
+    Bitmap [] bitmaps;
+    String st;
+    int i=0;
+    String [] add=new String[15];
+    int k=0;
 
     public MilkFragment(int number) {
         this.number=number;
@@ -105,6 +114,35 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.milkf, container, false);
+        view.setBackgroundColor(Color.parseColor("#3f8678"));
+
+        mInputSearch = view.findViewById(R.id.text2);
+
+        mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+        if(mSettings.contains(SIZE)) {
+            size = mSettings.getInt(SIZE, 0);
+        }
+        else{
+            size=30;
+        }
+        mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+        if(mSettings.contains(LANGUAGE)) {
+            lan = mSettings.getInt(LANGUAGE, 0);
+        }
+        else{
+            lan=0;
+        }
+        if(lan==0){
+            st="pp.txt";
+            mInputSearch.setHint("Поиск продукта");
+        }
+        else{
+            st="ppa.txt";
+            mInputSearch.setHint("Product search");
+
+        }
         if(number==1){len1=0;len2=5 ;}
         if(number==2){len1= 6;len2=12 ;}
         if(number==3){len1= 13;len2= 22;}
@@ -124,44 +162,35 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
         if(number==17){len1=128 ;len2= 135;}
         if(number==18){len1= 136;len2= 142;}
         if(number==19){len1= 143;len2=145 ;}
-            arrayname=new String[]{
-                    "Лисички","Шампиньоны","Опята","Подосиновик","Рыжики","Масленок",
+            arrayname=new String[146];
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(
+                    new InputStreamReader(getActivity().getAssets().open(st), "UTF-8"));
+            String mLine;
+            while ((mLine = reader.readLine())!= null) {
+                k=k+1;
+                if (k<=146) {
+                    arrayname[i] = mLine.replace(",", "");
+                    i += 1;
+                }
+                if (k==147){i=0;}
+                if (k>=167 && k<=181 && i<15){
+                    add[i]=mLine;
+                    i+=1;
+                }
+            }
+        } catch (IOException e) {
 
-                    "Шпинат","Щавель","Укроп","Петрушка","Зеленый лук","Розмарин","Кинза",
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
 
-                    "Пирожное","Торт","Халва","Мороженое","Мармелад","Печенье","Вафли","Пряник","Крем","Шоколад",
-
-                    "Гречка","Кукурузная крупа","Пшеничная крупа","Перловка","Мюсли","Овсянка","Рис","Манная каша",
-
-                    "Рисовая лапша","Яичная лапша","Пшеничная лапша","Кукурузная лапша",
-
-                    "Маргарин","Кокосовое масло","Подсолнечное масло","Оливковое масло","Льяное масло",
-
-                    "Йогурт","Сливочное масло","Кефир","Молоко коровье","Ряженка","Сгущённое молоко","Сметана","Творог",
-
-                    "Креветки","Кальмары","Мидии","Устрицы","Осьминог","Рак","Краб","Лобстер","Икра","Морские водоросли",
-
-                    "Ветчина","Колбаса вареная","Докторская колбаса","Копчёная колбаса","Молочные сосиски","Салями",
-
-                    "Свинина","Говядина","Курицы","Индейка","Баранина","Конина","Бекон",
-
-                    "Картофель","Редиска","Васаби","Морковь","Помидор","Капуста","Огурец","Свекла","Чеснок","Лук","Баклажан","Перец","Кабачок","Тыква","Броколли","Горох",
-
-                    "Грецкий орех","Кешью","Миндаль","Фисташки","Фундук",
-
-                    "Кета","Камбала","Сельдь","Скумбрия","Щука","Тунец","Треска","Форель","Минтай","Горбуша","Карп",
-
-                    "Сыр","Сыр бри","Моцарелла","Филадельфия","Сыр с плесенью","Камамбер",
-
-                    "Абрикос","Апельсин","Арбуз","Бананы","Гранат","Грейпфрут","Груша","Дыня","Лимон","Мандарины","Персик","Слива","Хурма","Яблоки",
-
-                    "Хлеб","Булочка","Лаваш","Пончик","Хлебцы",
-
-                    "Авокадо","Ананас","Дуриан","Личи","Помело","Карамбола","Манго","Личи",
-
-                    "Вишня","Виноград","Голубика","Малина","Клубника","Ежевика","Крыжовник",
-
-                    "Куриное яйцо","Перепелиное яйцо","Яйцо индейки"};
+                }
+            }
+        }
             arrayimage=new int[]{
                     R.drawable.g1,R.drawable.g2,R.drawable.g3,R.drawable.g4,R.drawable.g5,R.drawable.g6,
                    R.drawable.g7,R.drawable.g8,R.drawable.g9,R.drawable.g10,R.drawable.g11,R.drawable.g12,R.drawable.g13, R.drawable.g14,
@@ -182,35 +211,26 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
                     R.drawable.g129,R.drawable.g130,R.drawable.g131,R.drawable.g132,R.drawable.g133,R.drawable.g134,R.drawable.g135,R.drawable.g136,
                     R.drawable.g137,R.drawable.g138,R.drawable.g139,R.drawable.g140,R.drawable.g141,R.drawable.g142,R.drawable.g143,
                     R.drawable.g144,R.drawable.g145,R.drawable.g146,
-
-
             };
             days=new int[]{10,20};
-
+            bitmaps = new Bitmap[arrayimage.length];
 
         gcal = new GregorianCalendar();
-        View view = inflater.inflate(R.layout.milkf, container, false);
-        view.setBackgroundColor(Color.parseColor("#3f8678"));
+
         final ListView listView = view.findViewById(R.id.list);
        frag2 = new CreateProduct();
         frag1 = new Home();
 
 
 
-        mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
-        if(mSettings.contains(SIZE)) {
-            size = mSettings.getInt(SIZE, 0);
-        }
-        else{
-            size=30;
-        }
+
 
         fab = view.findViewById(R.id.fab);
         fab.show();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dialog("Создать свой продукт","Вы действительно хотите добавить продукт вручную?");
+                Dialog(add[0],add[1]);
             }
         });
         fillData();
@@ -221,7 +241,7 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
 
 
 
-        mInputSearch = view.findViewById(R.id.text2);
+
         mInputSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
@@ -261,8 +281,6 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void fillData() {
-
-
         for (int i = len1; i <len2+1 ; i++) {
             productss.add(new ItemProduct(arrayname[i], arrayimage[i],days[1],0,""));
         }
@@ -298,7 +316,6 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
                         fTrans = getFragmentManager().beginTransaction();
                         fTrans.replace(R.id.fragments, frag2);
                         fTrans.commit();
-
                     }
                 });
         builder.show();
@@ -309,19 +326,22 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
         dateText = dateFormat.format(currentDate);
         fab.hide();
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Добавить продукт");
+        builder.setTitle(add[3]);
         view1 = (LinearLayout) getLayoutInflater().inflate(R.layout.change, null);
         builder.setView(view1);
         final TextView tvTime =view1.findViewById(R.id.textdata);
         final EditText textday = view1.findViewById(R.id.textdays);
         final TextView dayormonth=view1.findViewById(R.id.dayormonth);
+        final TextView srok=view1.findViewById(R.id.srok);
+        srok.setText(add[14]);
+        dayormonth.setText(add[10]);
         dayormonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Dialog3(dayormonth);
             }
         });
-        tvTime.setText("дата изготовления: "+dateText);
+        tvTime.setText(add[3]+" "+dateText);
         textday.setText(""+day);
         c1 = Calendar.getInstance();
         tvTime.setOnClickListener(new View.OnClickListener() {
@@ -336,10 +356,10 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
                 picker = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        if ((gcal.get(Calendar.YEAR) < year) || (gcal.get(Calendar.MONTH) < monthOfYear && gcal.get(Calendar.YEAR) == year) || (gcal.get(Calendar.MONTH) == monthOfYear && gcal.get(Calendar.YEAR) == year && gcal.get(Calendar.DAY_OF_MONTH) <=dayOfMonth)) {
-                            Toast.makeText(getContext(), "Невозможно установить дату", LENGTH_SHORT).show();
+                        if ((gcal.get(Calendar.YEAR) < year) || (gcal.get(Calendar.MONTH) < monthOfYear && gcal.get(Calendar.YEAR) == year) || (gcal.get(Calendar.MONTH) == monthOfYear && gcal.get(Calendar.YEAR) == year && gcal.get(Calendar.DAY_OF_MONTH) <dayOfMonth)) {
+                            Toast.makeText(getContext(), add[4], LENGTH_SHORT).show();
                         } else {
-                                tvTime.setText("дата изготовления" + dayOfMonth + "." + (monthOfYear + 1) + "." + year);
+                                tvTime.setText(add[5] + dayOfMonth + "." + (monthOfYear + 1) + "." + year);
                                 c1 = Calendar.getInstance();
                                 c1.set(Calendar.MONTH, monthOfYear);
                                 c1.set(Calendar.DATE, dayOfMonth);
@@ -358,7 +378,7 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
                 picker.show();
             }
         });
-        builder.setNegativeButton("Отмена",
+        builder.setNegativeButton(add[6],
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
@@ -370,21 +390,26 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
                     public void onClick(DialogInterface dialog,
                                         int which) {
                         if (textday.getText().length() == 0){
-                            Toast.makeText(getContext(),"неправильный ввод", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(),add[7], Toast.LENGTH_LONG).show();
                         }
                         else{
-
                             day1=g1;
                             if(!textday.getText().toString().isEmpty()) {
-                                day1 = (Integer.parseInt(textday.getText().toString())) - days1;
-                            }
+                             try {
+                                 day1 = (Integer.parseInt(textday.getText().toString())) - days1;
 
+                             }
+                             catch (NumberFormatException e){
+                                 Toast.makeText(getContext(),add[8], LENGTH_SHORT).show();
+                                 day1=14;
+                             }
+                             }
                         if (day1<=0) {
-                            Toast.makeText(getContext(), "Невозможно установить дату", LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), add[9], LENGTH_SHORT).show();
                         } else {
                                 c1.add(Calendar.DATE, day1);
                                 SQLiteDatabase db = dbHelper.getWritableDatabase();
-                                Cursor c = db.query("mytable", null, null, null, null, null, null);
+                                Cursor c = db.query("mytable1", null, null, null, null, null, null);
                                 ContentValues cv = new ContentValues();
                                 cv.put("email", day1*umnoj);
                                 cv.put("name", selectedItem);
@@ -392,7 +417,7 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
                                 cv.put("day", c1.get(Calendar.DATE)+"");
                                 cv.put("month", c1.get(Calendar.MONTH)+"");
                                 cv.put("year", c1.get(Calendar.YEAR)+"");
-                                db.insert("mytable", null, cv);
+                                db.insert("mytable1", null, cv);
                             if (c != null && c.moveToFirst()) {
                                 do{
                                    id=Integer.valueOf(c.getString(c.getColumnIndexOrThrow("id")));
@@ -404,10 +429,9 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
                             PendingIntent pendingIntent = PendingIntent.getBroadcast(
                                     getContext(), id, intent, 0);
                             AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
-                            alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+ (day1 * 1000), pendingIntent);
-                                fTrans = getFragmentManager().beginTransaction();
-                                fTrans.replace(R.id.fragments, frag1);
-                                fTrans.commit();
+                            alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+ (day1*umnoj* 1000), pendingIntent);
+                            ((MainActivity)getActivity()).loadFragment(Home.newInstance());
+
                             }
                         }
                     }
@@ -416,9 +440,9 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
     }
 
 public void Dialog3(final TextView dayofmonth1){
-    final String[] array = {"дни","месяцы"};
+    final String[] array = {add[10],add[11]};
     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-    builder.setTitle("Выберете")
+    builder.setTitle(add[12])
             // добавляем переключатели
             .setSingleChoiceItems(array, -1,
                     new DialogInterface.OnClickListener() {
@@ -438,14 +462,14 @@ public void Dialog3(final TextView dayofmonth1){
                 @Override
                 public void onClick(DialogInterface dialog, int id) {
                         if (umnoj==1){
-                          dayofmonth1.setText("дни");
+                          dayofmonth1.setText(add[10]);
                         }
                         else{
-                            dayofmonth1.setText("месяцы");
+                            dayofmonth1.setText(add[11]);
                         }
                 }
             })
-            .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+            .setNegativeButton(add[13], new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int id) {
                     umnoj=1;
@@ -455,4 +479,9 @@ public void Dialog3(final TextView dayofmonth1){
     builder.show();
     return;
     }
+
+
 }
+
+
+

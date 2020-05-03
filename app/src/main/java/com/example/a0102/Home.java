@@ -1,9 +1,10 @@
 package com.example.a0102;
+
 import android.app.AlarmManager;
 import android.app.AlertDialog;
-
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,7 +12,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Display;
@@ -25,42 +25,40 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-
-
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
-
 import static android.content.Context.ALARM_SERVICE;
-import static android.content.Context.NOTIFICATION_SERVICE;
-import static android.widget.Toast.LENGTH_SHORT;
-import static androidx.core.app.NotificationCompat.PRIORITY_HIGH;
+
 
 //YANA LOH
-public class Home extends Fragment {
+public class Home extends Fragment{
 
     FrameLayout layout;
 
     //настройки
     public static final String PREFERENCES = "mysettings";
     public static final String SIZE = "size";
+    public static final String LANGUAGE = "language";
     SharedPreferences mSettings;
     int size;
 
@@ -86,6 +84,7 @@ public class Home extends Fragment {
     HomeAdapter adapter;
     ListView listView;
 
+
     String image;
     int image1;
     int [] arrayimage={
@@ -107,11 +106,26 @@ public class Home extends Fragment {
             R.drawable.g124,R.drawable.g125,R.drawable.g126,R.drawable.g127,R.drawable.g128,
             R.drawable.g129,R.drawable.g130,R.drawable.g131,R.drawable.g132,R.drawable.g133,R.drawable.g134,R.drawable.g135,R.drawable.g136,
             R.drawable.g137,R.drawable.g138,R.drawable.g139,R.drawable.g140,R.drawable.g141,R.drawable.g142,R.drawable.g143,
-            R.drawable.g144,R.drawable.g145,R.drawable.g146,
+            R.drawable.g144,R.drawable.g145,R.drawable.g146,R.drawable.question_115172
     };
     ArrayList<ItemProduct> spisok = new ArrayList<ItemProduct>();
     View view;
-
+    int index;
+    int id3;
+    String mLine;
+    String dayc;
+    String monthc;
+    String yearc;
+    GregorianCalendar gcal;
+    String x;
+    int k=0;
+    int i =0;
+    String names[]=new String[146];
+    String names1[]=new String[146];
+    int days;
+    int lan;
+    DialogFragment dlg;
+    BufferedReader reader;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -124,7 +138,6 @@ public class Home extends Fragment {
         dbHelper = new ControlSQL(getContext());
 
 
-
         //настройка
         mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         if(mSettings.contains(SIZE)) {
@@ -134,6 +147,59 @@ public class Home extends Fragment {
             size=30;
         }
 
+        mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+        if(mSettings.contains(LANGUAGE)) {
+            lan = mSettings.getInt(LANGUAGE, 0);
+        }
+        else{
+            lan=0;
+        }
+         reader = null;
+        try {
+            reader = new BufferedReader(
+                    new InputStreamReader(getActivity().getAssets().open("pp.txt"), "UTF-8"));
+
+            while ((mLine = reader.readLine())!= null) {
+                k=k+1;
+                if (k<=146 ) {
+                    names[i] = mLine.replace(",", "");
+                    i += 1;
+                }
+            }
+        } catch (IOException e) {
+
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+
+        i=0;
+        k=0;
+        try {
+            reader = new BufferedReader(
+                    new InputStreamReader(getActivity().getAssets().open("ppa.txt"), "UTF-8"));
+
+            while ((mLine = reader.readLine())!= null) {
+                k=k+1;
+                if (k<=146) {
+                    names1[i] = mLine.replace(",", "");
+                    i += 1;
+                }
+            }
+        } catch (IOException e) {
+
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                }
+            }
+        }
         //прогрманное создание даты
         TextView main = view.findViewById(R.id.data);
         main.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
@@ -144,6 +210,16 @@ public class Home extends Fragment {
         listView = view.findViewById(R.id.listView2);
         adapter = new HomeAdapter(getContext(), spisok,size);
         listView.setAdapter(adapter);
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int opaa = spisok.get(i).getId();
+                Info(opaa);
+            }
+        });
+
 
         //обработка нажатия на элемент списка
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -161,11 +237,13 @@ public class Home extends Fragment {
             final int width = display.getWidth();
             n=1;
             textView=new TextView(getContext());
-            textView.setTextSize(width/6);
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-            textView.setText("Пусто");
-            textView.setGravity(Gravity.CENTER);
-            frameLayout.addView(textView);
+            if(lan==0) { textView.setText("Пусто"); }
+            else{textView.setText("Empty");}
+
+                textView.setGravity(Gravity.CENTER);
+                frameLayout.addView(textView);
+
         }
         else{
             if (n==1) {
@@ -180,38 +258,56 @@ public class Home extends Fragment {
     private void fillData(View view) {
         spisok.clear();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor c = db.query("mytable", null, null, null, null, null, null);
+        Cursor c = db.query("mytable1", null, null, null, null, null, null);
         if (c != null && c.moveToFirst()) {
             do {
                 cal=Calendar.getInstance();
-                String dayc=c.getString(c.getColumnIndexOrThrow("day"));
-                String monthc=c.getString(c.getColumnIndexOrThrow("month"));
-                String yearc=c.getString(c.getColumnIndexOrThrow("year"));
+                dayc=c.getString(c.getColumnIndexOrThrow("day"));
+                monthc=c.getString(c.getColumnIndexOrThrow("month"));
+               yearc=c.getString(c.getColumnIndexOrThrow("year"));
                 name = c.getString(c.getColumnIndexOrThrow("name"));
                 day = Integer.valueOf(c.getString(c.getColumnIndexOrThrow("email")));
                 int id=Integer.valueOf(c.getString(c.getColumnIndexOrThrow("id")));
                image = c.getString(c.getColumnIndexOrThrow("image"));
 
+                for (int i = 0; i <names.length ; i++) {
+                    if(name.contains(names[i])){
+                        if (lan==1){
+                            name=names1[i];
+                            break;
+                        }
+                    }
+                }
+
+                for (int i = 0; i <names1.length ; i++) {
+                    if(name.contains(names1[i])){
+                        if (lan==0){
+                            name=names[i];
+                        }
+                        break;
+                    }
+                }
                 int one_d=Integer.parseInt(dayc);
                 int two_d=Integer.parseInt(cal.get(Calendar.DATE)+"");
-
                 int one_m=Integer.parseInt(monthc);
                 int two_m=Integer.parseInt(cal.get(Calendar.MONTH)+"");
-
                 int one_y=Integer.parseInt(yearc);
                 int two_y=Integer.parseInt(cal.get(Calendar.YEAR)+"");
 
-                 if ((one_y==two_y && ( (one_m==two_m && one_d>two_d) || (one_m>two_m)))  || (one_y>two_y)    ){
-                     if(image.contains("/")){
-                         spisok.add(new ItemProduct(name,666, day,id,image));
+                 if ((one_y==two_y && ( (one_m==two_m && one_d>two_d) || (one_m>two_m)))  || (one_y>two_y)    ) {
+                     if (image.contains("146r")) {
+                         spisok.add(new ItemProduct(name, arrayimage[146], day, id, ""));
+                     } else {
+                         if (image.contains("r")) {
+                             spisok.add(new ItemProduct(name, 666, day, id, image));
+                         } else {
+                             image1 = Integer.parseInt(image);
+                             spisok.add(new ItemProduct(name, arrayimage[image1], day, id, ""));
+                         }
                      }
-                     else{
-                         image1=Integer.parseInt(image);
-                         spisok.add(new ItemProduct(name, arrayimage[image1], day,id,""));
-                     }
-                     }
+                 }
                  else{
-                     creating(view,image1,id,image);
+                     creating(view,id,image);
                  }
             } while (c.moveToNext());
         }
@@ -230,8 +326,16 @@ public class Home extends Fragment {
 //диалоговое окно для удаление из БД
     private void Dialog(final int opa, final View view3) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Удалить продукт");
-        builder.setMessage("Вы действительно хотите удалить продукт?");
+        if (lan==0){
+            builder.setTitle("Удалить продукт");
+            builder.setMessage("Вы действительно хотите удалить продукт?");
+        }
+        else{
+            builder.setTitle("Delete product" );
+            builder.setMessage(" Are you sure you want to delete the product?");
+        }
+
+
         builder.setNegativeButton("NO",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
@@ -242,8 +346,12 @@ public class Home extends Fragment {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
+                        Fragment frg = new Home();
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.fragments, frg);
+                        ft.commit();
                         SQLiteDatabase db = dbHelper.getWritableDatabase();
-                        db.delete("mytable", "id = "+String.valueOf(opa),null);
+                        db.delete("mytable1", "id = "+String.valueOf(opa),null);
                         dbHelper.close();
 
                         Intent myIntent = new Intent(getContext(),
@@ -268,8 +376,7 @@ public class Home extends Fragment {
     }
 
 //программное создание layout просрочки
-void creating(final View view1, int day, final int id, String foruri){
-
+void creating(final View view1,final int id, String foruri){
     //корневая среда
     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
     params.width=120;
@@ -282,17 +389,25 @@ void creating(final View view1, int day, final int id, String foruri){
 
     //image
     final ImageView pic = new ImageView(getContext());
-    if(foruri.contains("/")){
-        try {
-            final InputStream imageStream = getContext().getContentResolver().openInputStream(Uri.parse(foruri));
-            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-            pic.setImageBitmap(selectedImage);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    if(foruri.contains("146r")) {
+        pic.setImageResource(arrayimage[146]);
     }
-    else{
-        pic.setImageResource(arrayimage[day]);
+        else {
+        if (foruri.contains("r")) {
+            try {
+                ContextWrapper cw = new ContextWrapper(getContext());
+                File directory = cw.getDir(foruri, Context.MODE_PRIVATE);
+                File mypath = new File(directory, foruri);
+                File f = new File(mypath + "");
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                pic.setImageBitmap(b);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            index=Integer.valueOf(foruri);
+            pic.setImageResource(arrayimage[index]);
+        }
     }
     pic.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
     pic.setTag(id);
@@ -310,6 +425,48 @@ void creating(final View view1, int day, final int id, String foruri){
     linearLayout.addView(pic);
     mRootFrameLayout.addView(linearLayout,params);
     }
+
+
+
+
+
+
+
+
+    private void Info (final int opa) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor c = db.query("mytable1", null, null, null, null, null, null);
+        if (c != null && c.moveToFirst()) {
+            do {
+                cal=Calendar.getInstance();
+                dayc=c.getString(c.getColumnIndexOrThrow("day"));
+                monthc=c.getString(c.getColumnIndexOrThrow("month"));
+                yearc=c.getString(c.getColumnIndexOrThrow("year"));
+                name = c.getString(c.getColumnIndexOrThrow("name"));
+                day = Integer.valueOf(c.getString(c.getColumnIndexOrThrow("email")));
+                id3=Integer.valueOf(c.getString(c.getColumnIndexOrThrow("id")));
+                image = c.getString(c.getColumnIndexOrThrow("image"));
+
+            } while (c.moveToNext()&& opa!=id3);
+        }
+        dbHelper.close();
+        Calendar c1 = Calendar.getInstance();
+        c1.set(Calendar.MONTH, Integer.parseInt(monthc));
+        c1.set(Calendar.DATE, Integer.parseInt(dayc));
+        c1.set(Calendar.YEAR, Integer.parseInt(yearc));
+        Date dateOne = c1.getTime();
+        gcal = new GregorianCalendar();
+        Calendar c2 = Calendar.getInstance();
+        c2.set(Calendar.MONTH, gcal.get(Calendar.MONTH));
+        c2.set(Calendar.DATE, gcal.get(Calendar.DAY_OF_MONTH));
+        c2.set(Calendar.YEAR, gcal.get(Calendar.YEAR));
+        Date two= c2.getTime();
+        days = Days.daysBetween(new DateTime(two), new DateTime(dateOne)).getDays();
+       dlg = new MyDialog(name,day,dayc,monthc,yearc,image,days);
+       dlg.show(getFragmentManager(), "dlg");
+
+    }
+
 }
 
 

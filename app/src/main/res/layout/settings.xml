@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="#008577"
+
     android:layout_height="match_parent">
     <TextView
-
+        android:id="@+id/set"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Настройки"
@@ -26,8 +28,29 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/size"
         android:drawablePadding="20dp"
+        android:layout_marginBottom="10dp"
         android:text="Изменить размер шрифта"
         android:id="@+id/sizetext"
+        android:background="@drawable/shape"
+        android:textSize="20dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="Выбрать язык"
+        android:id="@+id/language"
+        android:drawableLeft="@drawable/lan"
+        android:background="@drawable/shape"
+        android:textSize="20dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="Посмотреть инструкция"
+        android:id="@+id/how"
+        android:drawableLeft="@drawable/questionmark_83826"
         android:background="@drawable/shape"
         android:textSize="20dp" />
 

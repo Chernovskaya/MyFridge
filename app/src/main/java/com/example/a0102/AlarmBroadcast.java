@@ -1,5 +1,6 @@
 package com.example.a0102;
 
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,16 +12,18 @@ import androidx.core.app.NotificationManagerCompat;
 
 public class AlarmBroadcast extends BroadcastReceiver {
     private static final int NOTIFY_ID = 101;
-    private static String CHANNEL_ID = "Cat channel";
+    private static String CHANNEL_ID = "channel";
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent notificationIntent = new Intent(context, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(context,0, notificationIntent,0);
+        PendingIntent contentIntent = PendingIntent.getActivity(context,0, notificationIntent,PendingIntent.FLAG_CANCEL_CURRENT);
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context, CHANNEL_ID)
                         .setContentTitle("Напоминание")
+                        .setSmallIcon(R.drawable.icona1)
                         .setContentText("Пора выбросить продукт")
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                        .setContentIntent(contentIntent)
+                        .setPriority(NotificationManager.IMPORTANCE_HIGH);
 
         NotificationManagerCompat notificationManager =
                 NotificationManagerCompat.from(context);

@@ -6,11 +6,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <TextView
-            android:text="Дата изготовления"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"></TextView>
-
     <TextView
         android:id="@+id/textdata"
         android:layout_width="match_parent"
@@ -22,11 +17,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
-            android:text="Срок Годности:"
+
             android:layout_width="wrap_content"
-            android:gravity="center"
-            android:layout_height="match_parent"/>
+            android:id="@+id/srok"
+            android:layout_height="match_parent"
+            android:gravity="center" />
 
         <EditText
             android:id="@+id/textdays"
@@ -37,7 +34,7 @@
         <TextView
             android:layout_width="match_parent"
             android:gravity="center"
-            android:text="дни"
+
             android:id="@+id/dayormonth"
             android:layout_height="match_parent"/>
 

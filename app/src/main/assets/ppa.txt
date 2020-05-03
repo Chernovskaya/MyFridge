@@ -1,0 +1,216 @@
+Chanterelles
+Champignon
+Mushrooms
+Boletus
+Ginger
+Oiler
+Spinach
+Sorrel
+Dill
+Parsley
+Chives
+Rosemary
+Cilantro
+Small cake
+Cake
+Halva
+Ice cream
+Marmalade
+Cookies
+Waffles
+Gingerbread
+Cream
+Chocolate
+Buckwheat
+Corn grits
+Wheat groats
+Perlovka
+Muesli
+Oatmeal
+Rice
+Semolina
+Rice noodles
+Egg noodles
+Wheat noodles
+Corn noodles
+Margarine
+Coconut oil
+Sunflower oil
+Olive oil
+Batter
+Yogurt
+Butter
+Kefir
+Cow's milk
+Ryazhenka
+Condensed milk
+Sour cream
+Cottage cheese
+Shrimp
+Squid
+Mussels
+Oysters
+Octopus,
+Crayfish,
+Crab,
+Lobster
+Caviar",
+Seaweed,
+Ham,
+Cooked sausage
+Doctor's sausage
+Smoked sausage,
+Milk sausages
+Salami,
+Pork,
+Beef,
+Chicken,
+Turkey,
+Mutton,
+Horsemeat,
+Bacon,
+Potatoes,
+Radish,
+Wasabi
+Carrot,
+A tomato,
+Cabbage,
+Cucumber,
+Beet,
+Garlic,
+Bow,
+Eggplant,
+Pepper,
+Squash
+Pumpkin,
+Broccoli
+Peas,
+Walnut,
+Cashew,
+Almond,
+Pistachios
+Hazelnut,
+Chum
+Flounder,
+Herring,
+Mackerel,
+Pike,
+Tuna,
+Cod",
+Trout,
+Pollock
+Pink salmon,
+Carp,
+Cheese
+Brie cheese
+Mozzarella,
+Philadelphia,
+Cheese with mold ,
+Camembert,
+Apricot,
+Orange",
+Watermelon,
+Bananas
+Garnet,
+Grapefruit,
+Pear,
+Melon,
+Lemon,
+Tangerines
+Peach,
+Plum,
+Persimmon,
+Apples
+Bread,
+Bun,
+Pita,
+Donut
+Bread rolls
+Avocado,
+A pineapple,
+Durian
+Lychee
+Pomelo
+Carambola
+Mango,
+Lychee
+Cherry,
+Grapes
+Blueberry,
+Raspberry,
+Strawberry,
+Blackberry,
+Gooseberry,
+Egg,
+Quail egg,
+Turkey egg
+Mushrooms
+Greenery,
+Confectionery,
+Cereals
+Noodles,
+Oils
+Milk products,
+Seafood,
+Meat products,
+Meat,
+Vegetables,
+Nuts
+Fish,
+Cheeses
+Fruits,
+Bakery products,
+Exotic fruits,
+Berries
+Egg products
+
+Create your product
+Are you sure you want to add the product manually?
+Add product
+production date
+Unable to set date
+production date:
+Cancel
+wrong input
+Too big number, automatic number of days-14
+Unable to set date
+days
+months
+Select
+Cancel
+Shelf life
+
+Enter the title
+Production date
+Shelf life
+Days
+Unable to set date
+Production date
+Is empty
+Too many
+Not recommended for use
+months
+Select
+Cancel
+
+Settings
+Change font size
+Choose language
+Russian
+English
+Change the language
+Application Language:
+Resize
+Text Size:
+Cancel
+View instructions
+Are you sure you want to see the manual again?
+
+Skip
+Forward
+Back
+
+name:
+go bad:
+shelf life:
+days left:
