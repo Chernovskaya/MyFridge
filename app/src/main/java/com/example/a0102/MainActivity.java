@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
                     return true;
                 case R.id.navigation_news:
-                    loadFragment(News.newInstance());
+                    loadFragment(Settings.newInstance());
                     return true;
             }
             return false;

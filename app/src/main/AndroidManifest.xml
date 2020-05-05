@@ -18,8 +18,8 @@
             android:enabled="true"
             android:process=":remote"
             android:exported="true">
-        </receiver>
 
+        </receiver>
         <activity
             android:configChanges="orientation"
             android:screenOrientation="portrait"
@@ -37,7 +37,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             />
-        <activity android:name=".How"
+        <activity android:name=".Instruction"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             />

@@ -21,7 +21,7 @@ import java.io.InputStreamReader;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
-public class News extends Fragment {
+public class Settings extends Fragment {
     public static final String PREFERENCES = "mysettings";
     public static final String SIZE = "size";
     public static final String LANGUAGE = "language";
@@ -41,7 +41,7 @@ public class News extends Fragment {
     String [] names=new String[12];
     int k=0;
     int i=0;
-    public News() {
+    public Settings() {
     }
 
     @Override
@@ -127,8 +127,8 @@ public class News extends Fragment {
         return view;
     }
 
-    public static News newInstance() {
-        return new News();
+    public static Settings newInstance() {
+        return new Settings();
     }
 
     void dialog1(final String opa [], String title, final String mess, final int id1) {
@@ -151,7 +151,7 @@ public class News extends Fragment {
                         if(id1==0) {
                             s = d;
                             editor.putInt(SIZE, s);
-                            Fragment frg = new News();
+                            Fragment frg = new Settings();
                             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                             ft.replace(R.id.fragments, frg);
                             ft.commit();
@@ -170,7 +170,7 @@ public class News extends Fragment {
                             }
                             int r  = mSettings.getInt(LANGUAGE, 0);
                             Log.i(TAG, ""+r);
-                            Fragment frg = new News();
+                            Fragment frg = new Settings();
                             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                             ft.replace(R.id.fragments, frg);
                             ft.commit();
@@ -194,7 +194,7 @@ public class News extends Fragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent i = new Intent(getContext(), How.class);
+                        Intent i = new Intent(getContext(), Instruction.class);
                         startActivity(i);
 
 

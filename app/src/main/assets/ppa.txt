@@ -214,3 +214,6 @@ name:
 go bad:
 shelf life:
 days left:
+
+Reminder
+It's time to throw the product away

@@ -3,8 +3,8 @@ package com.example.a0102;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-public class ControlSQL  extends SQLiteOpenHelper {
-    public ControlSQL(Context context) {
+public class MYSQL extends SQLiteOpenHelper {
+    public MYSQL(Context context) {
         super(context, "myDB2", null, 1);
     }
     @Override

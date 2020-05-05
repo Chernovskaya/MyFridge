@@ -17,10 +17,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import static com.example.a0102.News.LANGUAGE;
-import static com.example.a0102.News.PREFERENCES;
+import static com.example.a0102.Settings.LANGUAGE;
+import static com.example.a0102.Settings.PREFERENCES;
 
-public class How extends AppCompatActivity {
+public class Instruction extends AppCompatActivity {
     int [] image;
     int i=0;
     Button btn1,btn2,btn3;
@@ -113,7 +113,7 @@ public class How extends AppCompatActivity {
                     }
                 }
                 if(i==image.length){
-                    Intent i = new Intent(How.this, MainActivity.class);
+                    Intent i = new Intent(Instruction.this, MainActivity.class);
                     startActivity(i);
                     finish();
                 }
@@ -123,7 +123,7 @@ public class How extends AppCompatActivity {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(How.this, MainActivity.class);
+                Intent i = new Intent(Instruction.this, MainActivity.class);
                 startActivity(i);
                 finish();
             }

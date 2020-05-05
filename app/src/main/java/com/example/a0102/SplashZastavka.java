@@ -32,7 +32,7 @@ public class SplashZastavka extends Activity {
                     finish();
                 }
                 else{
-                    Intent i = new Intent(SplashZastavka.this, How.class);
+                    Intent i = new Intent(SplashZastavka.this, Instruction.class);
                     startActivity(i);
                     finish();
                     editor.putInt(VISIT, 1);

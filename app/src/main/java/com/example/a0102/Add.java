@@ -18,8 +18,8 @@ import java.util.ArrayList;
 
 
 import static com.example.a0102.MyDialog.SIZE;
-import static com.example.a0102.News.LANGUAGE;
-import static com.example.a0102.News.PREFERENCES;
+import static com.example.a0102.Settings.LANGUAGE;
+import static com.example.a0102.Settings.PREFERENCES;
 
 public class Add extends ListFragment{
 
@@ -32,7 +32,7 @@ public class Add extends ListFragment{
     MyAdapter adapter;
 
     //новый фрагмент
-    MilkFragment frag2;
+    Choose_product frag2;
     FragmentTransaction fTrans;
 
     //чтение из файла
@@ -60,7 +60,7 @@ public class Add extends ListFragment{
         else{
             size=30;
         }
-        mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+
         if(mSettings.contains(LANGUAGE)) {
             lan = mSettings.getInt(LANGUAGE, 0);
         }
@@ -100,13 +100,6 @@ public class Add extends ListFragment{
             }
         }
         fillData();
-        mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
-        if(mSettings.contains(SIZE)) {
-            size = mSettings.getInt(SIZE, 0);
-        }
-        else{
-            size=30;
-        }
         adapter = new MyAdapter(getContext(),products,size);
         setListAdapter(adapter);
     }
@@ -131,7 +124,7 @@ public class Add extends ListFragment{
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
             fTrans = getFragmentManager().beginTransaction();
-            frag2 = new MilkFragment(position+1);
+            frag2 = new Choose_product(position+1);
             fTrans.replace(R.id.fragments, frag2);
             fTrans.commit();
     }

@@ -44,9 +44,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import static android.content.Context.ALARM_SERVICE;
-import static com.example.a0102.News.LANGUAGE;
-import static com.example.a0102.News.PREFERENCES;
-import static com.example.a0102.News.SIZE;
+import static com.example.a0102.Settings.LANGUAGE;
+import static com.example.a0102.Settings.PREFERENCES;
+import static com.example.a0102.Settings.SIZE;
 
 
 public class Home extends Fragment{
@@ -63,7 +63,7 @@ public class Home extends Fragment{
     String dateText = dateFormat.format(currentDate);
 
     //БД
-    ControlSQL dbHelper;
+    MYSQL dbHelper;
     Calendar cal;
 
     //порверка пустоты списка
@@ -135,7 +135,7 @@ public class Home extends Fragment{
 
 
         //содзание для БД
-        dbHelper = new ControlSQL(getContext());
+        dbHelper = new MYSQL(getContext());
 
 
         //настройка

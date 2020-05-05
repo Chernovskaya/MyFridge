@@ -47,11 +47,11 @@ import java.util.Locale;
 
 import static android.content.Context.ALARM_SERVICE;
 import static android.widget.Toast.LENGTH_SHORT;
-import static com.example.a0102.News.LANGUAGE;
-import static com.example.a0102.News.PREFERENCES;
-import static com.example.a0102.News.SIZE;
+import static com.example.a0102.Settings.LANGUAGE;
+import static com.example.a0102.Settings.PREFERENCES;
+import static com.example.a0102.Settings.SIZE;
 
-public class MilkFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class Choose_product extends Fragment implements AdapterView.OnItemClickListener {
     ArrayList<ItemProduct> productss = new ArrayList<ItemProduct>();
     ArrayList<ItemProduct> sort = new ArrayList<ItemProduct>();
 
@@ -59,7 +59,7 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
     String selectedItem;
     String search;
 
-    ControlSQL dbHelper;
+    MYSQL dbHelper;
 
     Date currentDate;
 
@@ -103,14 +103,14 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
     String [] add=new String[15];
     int k=0;
 
-    public MilkFragment(int number) {
+    public Choose_product(int number) {
         this.number=number;
     }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.milkf, container, false);
+        View view = inflater.inflate(R.layout.add_product, container, false);
         view.setBackgroundColor(Color.parseColor("#3f8678"));
 
         mInputSearch = view.findViewById(R.id.text2);
@@ -229,7 +229,7 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
             }
         });
         fillData();
-        dbHelper=new ControlSQL(getContext());
+        dbHelper=new MYSQL(getContext());
 
         adapter = new ObjectAdapter(getContext(), productss,size);
         listView.setAdapter(adapter);
@@ -281,8 +281,8 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////
-    public static MilkFragment newInstance() {
-        MilkFragment fragment = new MilkFragment(0);
+    public static Choose_product newInstance() {
+        Choose_product fragment = new Choose_product(0);
         return fragment;
     }
 
@@ -421,6 +421,14 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
                                 dbHelper.close();
 
                             Intent intent = new Intent(getContext(), AlarmBroadcast.class);
+                            if (lan==0){
+                                intent.putExtra("title","Напоминание");
+                                intent.putExtra("msg", "Пора выбросить продукт");
+                            }
+                            else{
+                                intent.putExtra("title","Reminder");
+                                intent.putExtra("msg","It's time to throw the product away");
+                            }
                             PendingIntent pendingIntent = PendingIntent.getBroadcast(
                                     getContext(), id, intent, 0);
                             AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);

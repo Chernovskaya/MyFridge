@@ -11,15 +11,22 @@ import androidx.core.app.NotificationManagerCompat;
 public class AlarmBroadcast extends BroadcastReceiver {
     private static final int NOTIFY_ID = 101;
     private static String CHANNEL_ID = "channel";
+
+
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent notificationIntent = new Intent(context, MainActivity.class);
+        String title=intent.getStringExtra("title");
+        String msg=intent.getStringExtra("msg");
+
+
         PendingIntent contentIntent = PendingIntent.getActivity(context,0, notificationIntent,PendingIntent.FLAG_CANCEL_CURRENT);
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context, CHANNEL_ID)
-                        .setContentTitle("Напоминание")
+                        .setContentTitle(title)
                         .setSmallIcon(R.drawable.icona1)
-                        .setContentText("Пора выбросить продукт")
+                        .setContentText(msg)
                         .setContentIntent(contentIntent)
                         .setPriority(NotificationManager.IMPORTANCE_HIGH);
 
@@ -27,4 +34,8 @@ public class AlarmBroadcast extends BroadcastReceiver {
                 NotificationManagerCompat.from(context);
         notificationManager.notify(NOTIFY_ID, builder.build());
     }
+
+
 }
+
+

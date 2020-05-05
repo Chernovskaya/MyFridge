@@ -49,8 +49,8 @@ import java.util.Locale;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.ALARM_SERVICE;
 import static android.widget.Toast.LENGTH_SHORT;
-import static com.example.a0102.News.LANGUAGE;
-import static com.example.a0102.News.PREFERENCES;
+import static com.example.a0102.Settings.LANGUAGE;
+import static com.example.a0102.Settings.PREFERENCES;
 
 public class CreateProduct extends Fragment {
     ImageView image;
@@ -59,7 +59,7 @@ public class CreateProduct extends Fragment {
     EditText dayy;
     TextView date;
     final int Pick=1;
-    ControlSQL dbHelper;
+    MYSQL dbHelper;
     DateFormat dateFormat;
     String dateText;
     Date currentDate;
@@ -183,7 +183,7 @@ public class CreateProduct extends Fragment {
         dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         dateText = dateFormat.format(currentDate);
         date.setText(names[1]+" "+dateText+" ");
-        dbHelper=new ControlSQL(getContext());
+        dbHelper=new MYSQL(getContext());
         name=view.findViewById(R.id.name);
         name.setHint(names[0]);
         frag2 = new Home();
