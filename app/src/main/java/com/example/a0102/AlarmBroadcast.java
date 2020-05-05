@@ -12,8 +12,6 @@ public class AlarmBroadcast extends BroadcastReceiver {
     private static final int NOTIFY_ID = 101;
     private static String CHANNEL_ID = "channel";
 
-
-
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent notificationIntent = new Intent(context, MainActivity.class);
@@ -34,8 +32,6 @@ public class AlarmBroadcast extends BroadcastReceiver {
                 NotificationManagerCompat.from(context);
         notificationManager.notify(NOTIFY_ID, builder.build());
     }
-
-
 }
 
 
