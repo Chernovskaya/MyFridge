@@ -1,0 +1,464 @@
+Index: app/src/main/res/layout/milkf.xml
+===================================================================
+--- app/src/main/res/layout/milkf.xml	(revision 8e466182b2dbe50d663d666609abe03edb6e9d7d)
++++ app/src/main/res/layout/add_product.xml	(date 1588091121292)
+Index: app/src/main/assets/ppa.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/assets/ppa.txt	(revision 8e466182b2dbe50d663d666609abe03edb6e9d7d)
++++ app/src/main/assets/ppa.txt	(date 1588690433447)
+@@ -213,4 +213,7 @@
+ name:
+ go bad:
+ shelf life:
+-days left:
+\ No newline at end of file
++days left:
++
++Reminder
++It's time to throw the product away
+\ No newline at end of file
+Index: app/src/main/java/com/example/a0102/MilkFragment.java
+===================================================================
+--- app/src/main/java/com/example/a0102/MilkFragment.java	(revision 8e466182b2dbe50d663d666609abe03edb6e9d7d)
++++ app/src/main/java/com/example/a0102/Choose_product.java	(date 1588693215042)
+@@ -47,11 +47,11 @@
+ 
+ import static android.content.Context.ALARM_SERVICE;
+ import static android.widget.Toast.LENGTH_SHORT;
+-import static com.example.a0102.News.LANGUAGE;
+-import static com.example.a0102.News.PREFERENCES;
+-import static com.example.a0102.News.SIZE;
++import static com.example.a0102.Settings.LANGUAGE;
++import static com.example.a0102.Settings.PREFERENCES;
++import static com.example.a0102.Settings.SIZE;
+ 
+-public class MilkFragment extends Fragment implements AdapterView.OnItemClickListener {
++public class Choose_product extends Fragment implements AdapterView.OnItemClickListener {
+     ArrayList<ItemProduct> productss = new ArrayList<ItemProduct>();
+     ArrayList<ItemProduct> sort = new ArrayList<ItemProduct>();
+ 
+@@ -59,7 +59,7 @@
+     String selectedItem;
+     String search;
+ 
+-    ControlSQL dbHelper;
++    MYSQL dbHelper;
+ 
+     Date currentDate;
+ 
+@@ -103,14 +103,14 @@
+     String [] add=new String[15];
+     int k=0;
+ 
+-    public MilkFragment(int number) {
++    public Choose_product(int number) {
+         this.number=number;
+     }
+     @Nullable
+     @Override
+     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+ 
+-        View view = inflater.inflate(R.layout.milkf, container, false);
++        View view = inflater.inflate(R.layout.add_product, container, false);
+         view.setBackgroundColor(Color.parseColor("#3f8678"));
+ 
+         mInputSearch = view.findViewById(R.id.text2);
+@@ -229,7 +229,7 @@
+             }
+         });
+         fillData();
+-        dbHelper=new ControlSQL(getContext());
++        dbHelper=new MYSQL(getContext());
+ 
+         adapter = new ObjectAdapter(getContext(), productss,size);
+         listView.setAdapter(adapter);
+@@ -281,8 +281,8 @@
+         }
+     }
+     ////////////////////////////////////////////////////////////////////////////////////
+-    public static MilkFragment newInstance() {
+-        MilkFragment fragment = new MilkFragment(0);
++    public static Choose_product newInstance() {
++        Choose_product fragment = new Choose_product(0);
+         return fragment;
+     }
+ 
+@@ -421,6 +421,14 @@
+                                 dbHelper.close();
+ 
+                             Intent intent = new Intent(getContext(), AlarmBroadcast.class);
++                            if (lan==0){
++                                intent.putExtra("title","Напоминание");
++                                intent.putExtra("msg", "Пора выбросить продукт");
++                            }
++                            else{
++                                intent.putExtra("title","Reminder");
++                                intent.putExtra("msg","It's time to throw the product away");
++                            }
+                             PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                                     getContext(), id, intent, 0);
+                             AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
+Index: app/src/main/assets/pp.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/assets/pp.txt	(revision 8e466182b2dbe50d663d666609abe03edb6e9d7d)
++++ app/src/main/assets/pp.txt	(date 1588690433422)
+@@ -213,4 +213,7 @@
+ имя:
+ испортится:
+ срок годности:
+-осталось дней:
+\ No newline at end of file
++осталось дней:
++
++Напоминание
++Пора выбросить продукт
+\ No newline at end of file
+Index: app/src/main/java/com/example/a0102/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/a0102/MainActivity.java	(revision 8e466182b2dbe50d663d666609abe03edb6e9d7d)
++++ app/src/main/java/com/example/a0102/MainActivity.java	(date 1588689853052)
+@@ -25,7 +25,7 @@
+ 
+                     return true;
+                 case R.id.navigation_news:
+-                    loadFragment(News.newInstance());
++                    loadFragment(Settings.newInstance());
+                     return true;
+             }
+             return false;
+Index: app/src/main/java/com/example/a0102/ControlSQL.java
+===================================================================
+--- app/src/main/java/com/example/a0102/ControlSQL.java	(revision 8e466182b2dbe50d663d666609abe03edb6e9d7d)
++++ app/src/main/java/com/example/a0102/MYSQL.java	(date 1588689852038)
+@@ -3,8 +3,8 @@
+ import android.content.Context;
+ import android.database.sqlite.SQLiteDatabase;
+ import android.database.sqlite.SQLiteOpenHelper;
+-public class ControlSQL  extends SQLiteOpenHelper {
+-    public ControlSQL(Context context) {
++public class MYSQL extends SQLiteOpenHelper {
++    public MYSQL(Context context) {
+         super(context, "myDB2", null, 1);
+     }
+     @Override
+Index: app/src/main/java/com/example/a0102/Home.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/a0102/Home.java	(revision 8e466182b2dbe50d663d666609abe03edb6e9d7d)
++++ app/src/main/java/com/example/a0102/Home.java	(date 1588689852522)
+@@ -44,9 +44,9 @@
+ import java.util.GregorianCalendar;
+ import java.util.Locale;
+ import static android.content.Context.ALARM_SERVICE;
+-import static com.example.a0102.News.LANGUAGE;
+-import static com.example.a0102.News.PREFERENCES;
+-import static com.example.a0102.News.SIZE;
++import static com.example.a0102.Settings.LANGUAGE;
++import static com.example.a0102.Settings.PREFERENCES;
++import static com.example.a0102.Settings.SIZE;
+ 
+ 
+ public class Home extends Fragment{
+@@ -63,7 +63,7 @@
+     String dateText = dateFormat.format(currentDate);
+ 
+     //БД
+-    ControlSQL dbHelper;
++    MYSQL dbHelper;
+     Calendar cal;
+ 
+     //порверка пустоты списка
+@@ -135,7 +135,7 @@
+ 
+ 
+         //содзание для БД
+-        dbHelper = new ControlSQL(getContext());
++        dbHelper = new MYSQL(getContext());
+ 
+ 
+         //настройка
+Index: app/src/main/java/com/example/a0102/AlarmBroadcast.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/a0102/AlarmBroadcast.java	(revision 8e466182b2dbe50d663d666609abe03edb6e9d7d)
++++ app/src/main/java/com/example/a0102/AlarmBroadcast.java	(date 1588693287670)
+@@ -11,15 +11,22 @@
+ public class AlarmBroadcast extends BroadcastReceiver {
+     private static final int NOTIFY_ID = 101;
+     private static String CHANNEL_ID = "channel";
++
++
++
+     @Override
+     public void onReceive(Context context, Intent intent) {
+         Intent notificationIntent = new Intent(context, MainActivity.class);
++        String title=intent.getStringExtra("title");
++        String msg=intent.getStringExtra("msg");
++
++
+         PendingIntent contentIntent = PendingIntent.getActivity(context,0, notificationIntent,PendingIntent.FLAG_CANCEL_CURRENT);
+         NotificationCompat.Builder builder =
+                 new NotificationCompat.Builder(context, CHANNEL_ID)
+-                        .setContentTitle("Напоминание")
++                        .setContentTitle(title)
+                         .setSmallIcon(R.drawable.icona1)
+-                        .setContentText("Пора выбросить продукт")
++                        .setContentText(msg)
+                         .setContentIntent(contentIntent)
+                         .setPriority(NotificationManager.IMPORTANCE_HIGH);
+ 
+@@ -27,4 +34,8 @@
+                 NotificationManagerCompat.from(context);
+         notificationManager.notify(NOTIFY_ID, builder.build());
+     }
++
++
+ }
++
++
+Index: app/src/main/java/com/example/a0102/How.java
+===================================================================
+--- app/src/main/java/com/example/a0102/How.java	(revision 8e466182b2dbe50d663d666609abe03edb6e9d7d)
++++ app/src/main/java/com/example/a0102/Instruction.java	(date 1588689852257)
+@@ -17,10 +17,10 @@
+ import java.io.IOException;
+ import java.io.InputStreamReader;
+ 
+-import static com.example.a0102.News.LANGUAGE;
+-import static com.example.a0102.News.PREFERENCES;
++import static com.example.a0102.Settings.LANGUAGE;
++import static com.example.a0102.Settings.PREFERENCES;
+ 
+-public class How extends AppCompatActivity {
++public class Instruction extends AppCompatActivity {
+     int [] image;
+     int i=0;
+     Button btn1,btn2,btn3;
+@@ -113,7 +113,7 @@
+                     }
+                 }
+                 if(i==image.length){
+-                    Intent i = new Intent(How.this, MainActivity.class);
++                    Intent i = new Intent(Instruction.this, MainActivity.class);
+                     startActivity(i);
+                     finish();
+                 }
+@@ -123,7 +123,7 @@
+         btn3.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+-                Intent i = new Intent(How.this, MainActivity.class);
++                Intent i = new Intent(Instruction.this, MainActivity.class);
+                 startActivity(i);
+                 finish();
+             }
+Index: app/src/main/java/com/example/a0102/News.java
+===================================================================
+--- app/src/main/java/com/example/a0102/News.java	(revision 8e466182b2dbe50d663d666609abe03edb6e9d7d)
++++ app/src/main/java/com/example/a0102/Settings.java	(date 1588689853380)
+@@ -21,7 +21,7 @@
+ import static androidx.constraintlayout.widget.Constraints.TAG;
+ 
+ 
+-public class News extends Fragment {
++public class Settings extends Fragment {
+     public static final String PREFERENCES = "mysettings";
+     public static final String SIZE = "size";
+     public static final String LANGUAGE = "language";
+@@ -41,7 +41,7 @@
+     String [] names=new String[12];
+     int k=0;
+     int i=0;
+-    public News() {
++    public Settings() {
+     }
+ 
+     @Override
+@@ -127,8 +127,8 @@
+         return view;
+     }
+ 
+-    public static News newInstance() {
+-        return new News();
++    public static Settings newInstance() {
++        return new Settings();
+     }
+ 
+     void dialog1(final String opa [], String title, final String mess, final int id1) {
+@@ -151,7 +151,7 @@
+                         if(id1==0) {
+                             s = d;
+                             editor.putInt(SIZE, s);
+-                            Fragment frg = new News();
++                            Fragment frg = new Settings();
+                             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                             ft.replace(R.id.fragments, frg);
+                             ft.commit();
+@@ -170,7 +170,7 @@
+                             }
+                             int r  = mSettings.getInt(LANGUAGE, 0);
+                             Log.i(TAG, ""+r);
+-                            Fragment frg = new News();
++                            Fragment frg = new Settings();
+                             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                             ft.replace(R.id.fragments, frg);
+                             ft.commit();
+@@ -194,7 +194,7 @@
+                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                     @Override
+                     public void onClick(DialogInterface dialog, int id) {
+-                        Intent i = new Intent(getContext(), How.class);
++                        Intent i = new Intent(getContext(), Instruction.class);
+                         startActivity(i);
+ 
+ 
+Index: app/src/main/java/com/example/a0102/Add.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/a0102/Add.java	(revision 8e466182b2dbe50d663d666609abe03edb6e9d7d)
++++ app/src/main/java/com/example/a0102/Add.java	(date 1588690433691)
+@@ -18,8 +18,8 @@
+ 
+ 
+ import static com.example.a0102.MyDialog.SIZE;
+-import static com.example.a0102.News.LANGUAGE;
+-import static com.example.a0102.News.PREFERENCES;
++import static com.example.a0102.Settings.LANGUAGE;
++import static com.example.a0102.Settings.PREFERENCES;
+ 
+ public class Add extends ListFragment{
+ 
+@@ -32,7 +32,7 @@
+     MyAdapter adapter;
+ 
+     //новый фрагмент
+-    MilkFragment frag2;
++    Choose_product frag2;
+     FragmentTransaction fTrans;
+ 
+     //чтение из файла
+@@ -60,7 +60,7 @@
+         else{
+             size=30;
+         }
+-        mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
++
+         if(mSettings.contains(LANGUAGE)) {
+             lan = mSettings.getInt(LANGUAGE, 0);
+         }
+@@ -100,13 +100,6 @@
+             }
+         }
+         fillData();
+-        mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+-        if(mSettings.contains(SIZE)) {
+-            size = mSettings.getInt(SIZE, 0);
+-        }
+-        else{
+-            size=30;
+-        }
+         adapter = new MyAdapter(getContext(),products,size);
+         setListAdapter(adapter);
+     }
+@@ -131,7 +124,7 @@
+     public void onListItemClick(ListView l, View v, int position, long id) {
+         super.onListItemClick(l, v, position, id);
+             fTrans = getFragmentManager().beginTransaction();
+-            frag2 = new MilkFragment(position+1);
++            frag2 = new Choose_product(position+1);
+             fTrans.replace(R.id.fragments, frag2);
+             fTrans.commit();
+     }
+Index: app/src/main/java/com/example/a0102/SplashZastavka.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/a0102/SplashZastavka.java	(revision 8e466182b2dbe50d663d666609abe03edb6e9d7d)
++++ app/src/main/java/com/example/a0102/SplashZastavka.java	(date 1588689853146)
+@@ -32,7 +32,7 @@
+                     finish();
+                 }
+                 else{
+-                    Intent i = new Intent(SplashZastavka.this, How.class);
++                    Intent i = new Intent(SplashZastavka.this, Instruction.class);
+                     startActivity(i);
+                     finish();
+                     editor.putInt(VISIT, 1);
+Index: app/src/main/java/com/example/a0102/CreateProduct.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/a0102/CreateProduct.java	(revision 8e466182b2dbe50d663d666609abe03edb6e9d7d)
++++ app/src/main/java/com/example/a0102/CreateProduct.java	(date 1588689852725)
+@@ -49,8 +49,8 @@
+ import static android.app.Activity.RESULT_OK;
+ import static android.content.Context.ALARM_SERVICE;
+ import static android.widget.Toast.LENGTH_SHORT;
+-import static com.example.a0102.News.LANGUAGE;
+-import static com.example.a0102.News.PREFERENCES;
++import static com.example.a0102.Settings.LANGUAGE;
++import static com.example.a0102.Settings.PREFERENCES;
+ 
+ public class CreateProduct extends Fragment {
+     ImageView image;
+@@ -59,7 +59,7 @@
+     EditText dayy;
+     TextView date;
+     final int Pick=1;
+-    ControlSQL dbHelper;
++    MYSQL dbHelper;
+     DateFormat dateFormat;
+     String dateText;
+     Date currentDate;
+@@ -183,7 +183,7 @@
+         dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+         dateText = dateFormat.format(currentDate);
+         date.setText(names[1]+" "+dateText+" ");
+-        dbHelper=new ControlSQL(getContext());
++        dbHelper=new MYSQL(getContext());
+         name=view.findViewById(R.id.name);
+         name.setHint(names[0]);
+         frag2 = new Home();
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 8e466182b2dbe50d663d666609abe03edb6e9d7d)
++++ app/src/main/AndroidManifest.xml	(date 1588692234573)
+@@ -18,8 +18,8 @@
+             android:enabled="true"
+             android:process=":remote"
+             android:exported="true">
++
+         </receiver>
+-
+         <activity
+             android:configChanges="orientation"
+             android:screenOrientation="portrait"
+@@ -37,7 +37,7 @@
+             android:launchMode="singleTop"
+             android:screenOrientation="portrait"
+             />
+-        <activity android:name=".How"
++        <activity android:name=".Instruction"
+             android:launchMode="singleTop"
+             android:screenOrientation="portrait"
+             />
