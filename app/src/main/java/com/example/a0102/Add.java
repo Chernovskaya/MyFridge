@@ -15,11 +15,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-
-
-import static com.example.a0102.MyDialog.SIZE;
 import static com.example.a0102.Settings.LANGUAGE;
 import static com.example.a0102.Settings.PREFERENCES;
+import static com.example.a0102.Settings.SIZE;
 
 public class Add extends ListFragment{
 
