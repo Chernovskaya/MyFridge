@@ -1,4 +1,5 @@
 package com.example.a0102;
+
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -11,12 +12,10 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,20 +26,16 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import org.joda.time.DateTime;
 import org.joda.time.Days;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,6 +47,9 @@ import java.util.Locale;
 
 import static android.content.Context.ALARM_SERVICE;
 import static android.widget.Toast.LENGTH_SHORT;
+import static com.example.a0102.News.LANGUAGE;
+import static com.example.a0102.News.PREFERENCES;
+import static com.example.a0102.News.SIZE;
 
 public class MilkFragment extends Fragment implements AdapterView.OnItemClickListener {
     ArrayList<ItemProduct> productss = new ArrayList<ItemProduct>();
@@ -89,10 +87,7 @@ public class MilkFragment extends Fragment implements AdapterView.OnItemClickLis
     private int number;
     Calendar c1;
     int lan;
-    //настройки
-    public static final String PREFERENCES = "mysettings";
-    public static final String SIZE = "size";
-    public static final String LANGUAGE = "language";
+
 
     int size;
     SharedPreferences mSettings;

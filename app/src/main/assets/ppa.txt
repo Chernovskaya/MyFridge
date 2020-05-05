@@ -196,7 +196,7 @@ Cancel
 Settings
 Change font size
 Choose language
-Russian
+Русский
 English
 Change the language
 Application Language:

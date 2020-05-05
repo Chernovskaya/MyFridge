@@ -1,49 +1,28 @@
 package com.example.a0102;
 
-import android.app.Activity;
-import android.app.ListActivity;
-import android.app.PendingIntent;
+
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class HomeAdapter extends BaseAdapter {
+
     //настройки
-    public static final String PREFERENCES = "mysettings";
-    public static final String SIZE = "size";
-    SharedPreferences.Editor editor;
-    SharedPreferences mSettings;
     int size;
-
-
-Context ctx;
+    Context ctx;
     LayoutInflater lInflater;
     ArrayList<ItemProduct> objects;
     RecyclerView.ViewHolder viewHolder;
@@ -114,7 +93,5 @@ Context ctx;
 
         return view;
     }
-    //////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
 
 }

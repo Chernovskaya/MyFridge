@@ -3,27 +3,22 @@ package com.example.a0102;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import static com.example.a0102.News.LANGUAGE;
+import static com.example.a0102.News.PREFERENCES;
 
 public class How extends AppCompatActivity {
     int [] image;
@@ -31,8 +26,7 @@ public class How extends AppCompatActivity {
     Button btn1,btn2,btn3;
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
-    public static final String PREFERENCES = "mysettings";
-    public static final String LANGUAGE = "language";
+
     LinearLayout layout1,first,buttons;
     int lan;
     String st;

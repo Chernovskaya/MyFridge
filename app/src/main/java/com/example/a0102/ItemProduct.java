@@ -16,9 +16,6 @@ public class ItemProduct {
     public String getName() {
         return name1;
     }
-    public String getImage2() {
-        return image2;
-    }
     public int getImage() {
         return image1;
     }

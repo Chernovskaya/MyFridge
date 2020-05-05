@@ -4,7 +4,6 @@ package com.example.a0102;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
@@ -16,12 +15,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,14 +27,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import org.joda.time.DateTime;
 import org.joda.time.Days;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -47,23 +40,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.ALARM_SERVICE;
 import static android.widget.Toast.LENGTH_SHORT;
+import static com.example.a0102.News.LANGUAGE;
+import static com.example.a0102.News.PREFERENCES;
 
 public class CreateProduct extends Fragment {
     ImageView image;
@@ -74,7 +61,6 @@ public class CreateProduct extends Fragment {
     final int Pick=1;
     ControlSQL dbHelper;
     DateFormat dateFormat;
-    String name1;
     String dateText;
     Date currentDate;
     int day1;
@@ -103,8 +89,6 @@ public class CreateProduct extends Fragment {
     String st;
     int k=0;
     int i=0;
-    public static final String PREFERENCES = "mysettings";
-    public static final String LANGUAGE = "language";
     String [] names = new String [12];
 
 
@@ -112,8 +96,6 @@ public class CreateProduct extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
 
         mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         if(mSettings.contains(LANGUAGE)) {

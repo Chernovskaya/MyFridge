@@ -2,49 +2,40 @@ package com.example.a0102;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.BitmapRegionDecoder;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.ListFragment;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
+
+import static com.example.a0102.MyDialog.SIZE;
+import static com.example.a0102.News.LANGUAGE;
 import static com.example.a0102.News.PREFERENCES;
 
 public class Add extends ListFragment{
+
     //настройки
-    public static final String PREFERENCES = "mysettings";
-    public static final String SIZE = "size";
-    public static final String LANGUAGE = "language";
     int size;
     SharedPreferences mSettings;
+
+    //списки
     ArrayList<Product> products = new ArrayList<Product>();
     MyAdapter adapter;
+
+    //новый фрагмент
     MilkFragment frag2;
     FragmentTransaction fTrans;
+
+    //чтение из файла
     int i =0;
     String [] name= new String[19];
     String  st;
@@ -60,6 +51,8 @@ public class Add extends ListFragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        //настройки
         mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         if(mSettings.contains(SIZE)) {
             size = mSettings.getInt(SIZE, 0);
@@ -81,6 +74,8 @@ public class Add extends ListFragment{
         else{
             st="ppa.txt";
         }
+
+        //чтение из файла
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(
@@ -114,8 +109,6 @@ public class Add extends ListFragment{
         }
         adapter = new MyAdapter(getContext(),products,size);
         setListAdapter(adapter);
-        //настройка
-
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -124,7 +117,6 @@ public class Add extends ListFragment{
         return view;
 
     }
-
 
  //заполнение списка
     private void fillData() {

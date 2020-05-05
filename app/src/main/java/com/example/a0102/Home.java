@@ -25,15 +25,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import org.joda.time.DateTime;
 import org.joda.time.Days;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -48,17 +44,16 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import static android.content.Context.ALARM_SERVICE;
+import static com.example.a0102.News.LANGUAGE;
+import static com.example.a0102.News.PREFERENCES;
+import static com.example.a0102.News.SIZE;
 
 
-//YANA LOH
 public class Home extends Fragment{
 
     FrameLayout layout;
 
     //настройки
-    public static final String PREFERENCES = "mysettings";
-    public static final String SIZE = "size";
-    public static final String LANGUAGE = "language";
     SharedPreferences mSettings;
     int size;
 
@@ -110,22 +105,27 @@ public class Home extends Fragment{
     };
     ArrayList<ItemProduct> spisok = new ArrayList<ItemProduct>();
     View view;
+
     int index;
     int id3;
+
     String mLine;
     String dayc;
     String monthc;
     String yearc;
+
     GregorianCalendar gcal;
-    String x;
+
     int k=0;
     int i =0;
     String names[]=new String[146];
     String names1[]=new String[146];
     int days;
     int lan;
+
     DialogFragment dlg;
     BufferedReader reader;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -179,6 +179,9 @@ public class Home extends Fragment{
 
         i=0;
         k=0;
+
+
+        //чтение языка из файла
         try {
             reader = new BufferedReader(
                     new InputStreamReader(getActivity().getAssets().open("ppa.txt"), "UTF-8"));
@@ -200,18 +203,19 @@ public class Home extends Fragment{
                 }
             }
         }
+
+
         //прогрманное создание даты
         TextView main = view.findViewById(R.id.data);
         main.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
         main.setText(dateText+" ");
+
 
         //всякие списки адпаптеры
         fillData(view);
         listView = view.findViewById(R.id.listView2);
         adapter = new HomeAdapter(getContext(), spisok,size);
         listView.setAdapter(adapter);
-
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -231,6 +235,7 @@ public class Home extends Fragment{
             }
         });
 
+
         //проверка на пустоту
         if (spisok.isEmpty()){
             Display display =getActivity().getWindowManager().getDefaultDisplay();
@@ -243,7 +248,6 @@ public class Home extends Fragment{
 
                 textView.setGravity(Gravity.CENTER);
                 frameLayout.addView(textView);
-
         }
         else{
             if (n==1) {
@@ -278,7 +282,7 @@ public class Home extends Fragment{
                         }
                     }
                 }
-
+                //перевод слов, существующих в файле
                 for (int i = 0; i <names1.length ; i++) {
                     if(name.contains(names1[i])){
                         if (lan==0){
@@ -334,8 +338,6 @@ public class Home extends Fragment{
             builder.setTitle("Delete product" );
             builder.setMessage(" Are you sure you want to delete the product?");
         }
-
-
         builder.setNegativeButton("NO",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
@@ -354,6 +356,7 @@ public class Home extends Fragment{
                         db.delete("mytable1", "id = "+String.valueOf(opa),null);
                         dbHelper.close();
 
+                        //создание будильника
                         Intent myIntent = new Intent(getContext(),
                                 AlarmBroadcast.class);
 
@@ -426,13 +429,7 @@ void creating(final View view1,final int id, String foruri){
     mRootFrameLayout.addView(linearLayout,params);
     }
 
-
-
-
-
-
-
-
+    //нажатие на элемента списка
     private void Info (final int opa) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor c = db.query("mytable1", null, null, null, null, null, null);
@@ -448,6 +445,22 @@ void creating(final View view1,final int id, String foruri){
                 image = c.getString(c.getColumnIndexOrThrow("image"));
 
             } while (c.moveToNext()&& opa!=id3);
+        }
+        for (int i = 0; i <names.length ; i++) {
+            if(name.contains(names[i])){
+                if (lan==1){
+                    name=names1[i];
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i <names1.length ; i++) {
+            if(name.contains(names1[i])){
+                if (lan==0){
+                    name=names[i];
+                }
+                break;
+            }
         }
         dbHelper.close();
         Calendar c1 = Calendar.getInstance();
@@ -466,7 +479,6 @@ void creating(final View view1,final int id, String foruri){
        dlg.show(getFragmentManager(), "dlg");
 
     }
-
 }
 
 
