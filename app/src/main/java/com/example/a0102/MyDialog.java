@@ -19,6 +19,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static com.example.a0102.Settings.LANGUAGE;
+import static com.example.a0102.Settings.PREFERENCES;
+
 public class MyDialog extends DialogFragment  {
     private String name;
     private String dayc;
@@ -27,9 +30,7 @@ public class MyDialog extends DialogFragment  {
     private String image;
     private int days;
     private int day;
-    public static final String PREFERENCES = "mysettings";
-    public static final String SIZE = "size";
-    public static final String LANGUAGE = "language";
+
     int lan;
     String st;
     SharedPreferences mSettings;
@@ -103,9 +104,7 @@ public class MyDialog extends DialogFragment  {
 
 
 
-
-
-            View v = inflater.inflate(R.layout.info, null);
+        View v = inflater.inflate(R.layout.info, null);
         TextView textView=v.findViewById(R.id.textView3);
         TextView textView2=v.findViewById(R.id.textView4);
         TextView textView3=v.findViewById(R.id.textView5);
