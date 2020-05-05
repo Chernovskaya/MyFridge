@@ -268,6 +268,14 @@ public class CreateProduct extends Fragment {
                                 dbHelper.close();
 
                                 Intent intent = new Intent(getContext(), AlarmBroadcast.class);
+                                if (lan==0){
+                                    intent.putExtra("title","Напоминание");
+                                    intent.putExtra("msg", "Пора выбросить продукт");
+                                }
+                                else{
+                                    intent.putExtra("title","Reminder");
+                                    intent.putExtra("msg","It's time to throw the product away");
+                                }
                                 PendingIntent pendingIntent = PendingIntent.getBroadcast(
                                         getContext(), id1, intent, 0);
                                 AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
