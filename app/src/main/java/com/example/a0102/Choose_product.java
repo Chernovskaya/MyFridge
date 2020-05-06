@@ -61,6 +61,8 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
 
     MYSQL dbHelper;
 
+
+
     Date currentDate;
 
     DateFormat dateFormat;
@@ -87,10 +89,9 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
     private int number;
     Calendar c1;
     int lan;
-
-
     int size;
     SharedPreferences mSettings;
+    SharedPreferences.Editor editor;
     Date dateOne;
     Calendar c2;
     int id;
@@ -116,6 +117,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
         mInputSearch = view.findViewById(R.id.text2);
 
         mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+        editor = mSettings.edit();
         if(mSettings.contains(SIZE)) {
             size = mSettings.getInt(SIZE, 0);
         }
@@ -404,21 +406,28 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                         } else {
                                 c1.add(Calendar.DATE, day1);
                                 SQLiteDatabase db = dbHelper.getWritableDatabase();
+
                                 Cursor c = db.query("mytable1", null, null, null, null, null, null);
                                 ContentValues cv = new ContentValues();
+                                ContentValues cv2 = new ContentValues();
                                 cv.put("email", day1*umnoj);
                                 cv.put("name", selectedItem);
                                 cv.put("image", imagee);
                                 cv.put("day", c1.get(Calendar.DATE)+"");
                                 cv.put("month", c1.get(Calendar.MONTH)+"");
                                 cv.put("year", c1.get(Calendar.YEAR)+"");
+                                cv2.put("name", selectedItem);
                                 db.insert("mytable1", null, cv);
+                                 editor.putInt(selectedItem+"*all*", 1);
+                                 editor.putInt(selectedItem+"*del*", 0);
+                                 editor.apply();
                             if (c != null && c.moveToFirst()) {
                                 do{
                                    id=Integer.valueOf(c.getString(c.getColumnIndexOrThrow("id")));
                                 }while (c.moveToNext());
                             }
                                 dbHelper.close();
+
 
                             Intent intent = new Intent(getContext(), AlarmBroadcast.class);
                             if (lan==0){

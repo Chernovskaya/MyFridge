@@ -33,6 +33,7 @@ public class Settings extends Fragment {
     TextView sizetext;
     TextView language;
     TextView how;
+    TextView stat;
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
     int size;
@@ -40,6 +41,7 @@ public class Settings extends Fragment {
     int lan;
     String [] names=new String[12];
     int k=0;
+    FragmentTransaction fTrans;
     int i=0;
     public Settings() {
     }
@@ -97,6 +99,13 @@ public class Settings extends Fragment {
         textView.setText(names[0]);
         final String[] languages = {names[3],names[4]};
         sizetext = view.findViewById(R.id.sizetext);
+        stat = view.findViewById(R.id.stat);
+        stat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         how=view.findViewById(R.id.how);
         how.setText(names[10]);
         how.setOnClickListener(new View.OnClickListener() {

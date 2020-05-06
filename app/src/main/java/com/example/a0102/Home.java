@@ -262,7 +262,9 @@ public class Home extends Fragment{
     private void fillData(View view) {
         spisok.clear();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+
         Cursor c = db.query("mytable1", null, null, null, null, null, null);
+
         if (c != null && c.moveToFirst()) {
             do {
                 cal=Calendar.getInstance();
@@ -273,7 +275,6 @@ public class Home extends Fragment{
                 day = Integer.valueOf(c.getString(c.getColumnIndexOrThrow("email")));
                 int id=Integer.valueOf(c.getString(c.getColumnIndexOrThrow("id")));
                image = c.getString(c.getColumnIndexOrThrow("image"));
-
                 for (int i = 0; i <names.length ; i++) {
                     if(name.contains(names[i])){
                         if (lan==1){
@@ -297,7 +298,6 @@ public class Home extends Fragment{
                 int two_m=Integer.parseInt(cal.get(Calendar.MONTH)+"");
                 int one_y=Integer.parseInt(yearc);
                 int two_y=Integer.parseInt(cal.get(Calendar.YEAR)+"");
-
                  if ((one_y==two_y && ( (one_m==two_m && one_d>two_d) || (one_m>two_m)))  || (one_y>two_y)    ) {
                      if (image.contains("146r")) {
                          spisok.add(new ItemProduct(name, arrayimage[146], day, id, ""));
@@ -311,6 +311,9 @@ public class Home extends Fragment{
                      }
                  }
                  else{
+
+
+
                      creating(view,id,image);
                  }
             } while (c.moveToNext());
