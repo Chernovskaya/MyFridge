@@ -492,6 +492,7 @@ void creating(final View view1,final int id, String foruri){
         c2.set(Calendar.YEAR, gcal.get(Calendar.YEAR));
         Date two= c2.getTime();
         days = Days.daysBetween(new DateTime(two), new DateTime(dateOne)).getDays();
+
        dlg = new MyDialog(name,day,dayc,monthc,yearc,image,days);
        dlg.show(getFragmentManager(), "dlg");
 

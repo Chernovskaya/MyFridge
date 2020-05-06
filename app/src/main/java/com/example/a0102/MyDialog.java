@@ -1,5 +1,7 @@
 package com.example.a0102;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
@@ -11,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,16 +35,19 @@ public class MyDialog extends DialogFragment  {
     private String image;
     private int days;
     private int day;
-
     int lan;
     String st;
     SharedPreferences mSettings;
-    String [] names=new String[4];
+    String [] names=new String[5];
     int k1=0;
     int i=0;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
         int [] arrayimage={
                 R.drawable.g1,R.drawable.g2,R.drawable.g3,R.drawable.g4,R.drawable.g5,R.drawable.g6,
                 R.drawable.g7,R.drawable.g8,R.drawable.g9,R.drawable.g10,R.drawable.g11,R.drawable.g12,R.drawable.g13, R.drawable.g14,
@@ -84,7 +92,7 @@ public class MyDialog extends DialogFragment  {
             String mLine;
             while ((mLine = reader.readLine())!= null) {
                 k1=k1+1;
-                if (k1<=216 && k1>=213) {
+                if (k1<=217 && k1>=213) {
                     names[i]=mLine;
                     i+=1;
                 }
@@ -101,8 +109,6 @@ public class MyDialog extends DialogFragment  {
                 }
             }
         }
-
-
 
         View v = inflater.inflate(R.layout.info, null);
         TextView textView=v.findViewById(R.id.textView3);
@@ -131,13 +137,18 @@ public class MyDialog extends DialogFragment  {
                     e.printStackTrace();
                 }
             } else {
-               int  index=Integer.valueOf(image);
+                int  index=Integer.valueOf(image);
                 imageView.setImageResource(arrayimage[index]);
             }
         }
-
-        return v;
+        builder.setTitle(names[4]);
+        builder.setView(v);
+        return builder.create();
     }
+
+
+
+
     public MyDialog(String name,int day,String dayc,String monthc,String yearc, String image,int days){
         this.name=name;
         this.dayc=dayc;
