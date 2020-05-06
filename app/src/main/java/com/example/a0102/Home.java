@@ -3,6 +3,7 @@ package com.example.a0102;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
@@ -44,6 +45,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import static android.content.Context.ALARM_SERVICE;
+import static com.example.a0102.Settings.ALLALL;
+import static com.example.a0102.Settings.GOBAD;
 import static com.example.a0102.Settings.LANGUAGE;
 import static com.example.a0102.Settings.PREFERENCES;
 import static com.example.a0102.Settings.SIZE;
@@ -82,6 +85,8 @@ public class Home extends Fragment{
 
     String image;
     int image1;
+    SharedPreferences.Editor editor;
+    String bool;
     int [] arrayimage={
             R.drawable.g1,R.drawable.g2,R.drawable.g3,R.drawable.g4,R.drawable.g5,R.drawable.g6,
             R.drawable.g7,R.drawable.g8,R.drawable.g9,R.drawable.g10,R.drawable.g11,R.drawable.g12,R.drawable.g13, R.drawable.g14,
@@ -213,6 +218,7 @@ public class Home extends Fragment{
 
         //всякие списки адпаптеры
         fillData(view);
+
         listView = view.findViewById(R.id.listView2);
         adapter = new HomeAdapter(getContext(), spisok,size);
         listView.setAdapter(adapter);
@@ -263,7 +269,7 @@ public class Home extends Fragment{
         spisok.clear();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        Cursor c = db.query("mytable1", null, null, null, null, null, null);
+        Cursor c = db.query("mytable", null, null, null, null, null, null);
 
         if (c != null && c.moveToFirst()) {
             do {
@@ -275,6 +281,7 @@ public class Home extends Fragment{
                 day = Integer.valueOf(c.getString(c.getColumnIndexOrThrow("email")));
                 int id=Integer.valueOf(c.getString(c.getColumnIndexOrThrow("id")));
                image = c.getString(c.getColumnIndexOrThrow("image"));
+                bool=c.getString(c.getColumnIndexOrThrow("gobad"));
                 for (int i = 0; i <names.length ; i++) {
                     if(name.contains(names[i])){
                         if (lan==1){
@@ -311,9 +318,15 @@ public class Home extends Fragment{
                      }
                  }
                  else{
-
-
-
+                     ContentValues values = new ContentValues();
+                     values.put("gobad", "1");
+                     if(bool.contains("0")){
+                     db.update("mytable",values, "gobad" + "= ?", new String[]{"0"});
+                     int update=mSettings.getInt(GOBAD,0)+1;
+                         editor = mSettings.edit();
+                         editor.putInt(GOBAD,update);
+                         editor.apply();
+                     }
                      creating(view,id,image);
                  }
             } while (c.moveToNext());
@@ -356,7 +369,7 @@ public class Home extends Fragment{
                         ft.replace(R.id.fragments, frg);
                         ft.commit();
                         SQLiteDatabase db = dbHelper.getWritableDatabase();
-                        db.delete("mytable1", "id = "+String.valueOf(opa),null);
+                        db.delete("mytable", "id = "+String.valueOf(opa),null);
                         dbHelper.close();
 
                         //создание будильника
@@ -430,12 +443,13 @@ void creating(final View view1,final int id, String foruri){
     linearLayout.setBackgroundResource(R.drawable.fon1);
     linearLayout.addView(pic);
     mRootFrameLayout.addView(linearLayout,params);
+
     }
 
     //нажатие на элемента списка
     private void Info (final int opa) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor c = db.query("mytable1", null, null, null, null, null, null);
+        Cursor c = db.query("mytable", null, null, null, null, null, null);
         if (c != null && c.moveToFirst()) {
             do {
                 cal=Calendar.getInstance();

@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,6 +27,8 @@ public class Settings extends Fragment {
     public static final String PREFERENCES = "mysettings";
     public static final String SIZE = "size";
     public static final String LANGUAGE = "language";
+    public static final String ALLALL= "allall";
+    public static final String GOBAD= "gobad";
 
 
 
@@ -39,10 +43,11 @@ public class Settings extends Fragment {
     int size;
     String st;
     int lan;
-    String [] names=new String[12];
+    String [] names=new String[16];
     int k=0;
     FragmentTransaction fTrans;
     int i=0;
+
     public Settings() {
     }
 
@@ -53,6 +58,7 @@ public class Settings extends Fragment {
         View view = inflater.inflate(R.layout.settings, container, false);
         mSettings = getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         editor = mSettings.edit();
+
 
         if(mSettings.contains(SIZE)) {
             size = mSettings.getInt(SIZE, 0);
@@ -79,7 +85,7 @@ public class Settings extends Fragment {
             String mLine;
             while ((mLine = reader.readLine())!= null) {
                 k=k+1;
-                if (k<=207 && k>=196) {
+                if ((k>=221 && k<=224)||(k<=207 && k>=196)) {
                     names[i] = mLine.replace(",", "");
                     i += 1;
                 }
@@ -100,10 +106,13 @@ public class Settings extends Fragment {
         final String[] languages = {names[3],names[4]};
         sizetext = view.findViewById(R.id.sizetext);
         stat = view.findViewById(R.id.stat);
+        stat.setText(names[12]);
+        stat.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
         stat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                DDialog dlg = new DDialog(names[12],names[13],names[14],names[15]);
+                dlg.show(getFragmentManager(), "ddlg");
             }
         });
         how=view.findViewById(R.id.how);
@@ -213,6 +222,7 @@ public class Settings extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                     }
+
                 });
         builder.show();
     }

@@ -217,3 +217,8 @@ days left:
 
 Reminder
 It's time to throw the product away
+
+Statistics
+Total
+Spoiled
+Eaten up(will be eaten)

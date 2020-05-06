@@ -21,6 +21,7 @@ android {
 
 dependencies {
     compile files('libs/joda-time-2.10.5.jar')
+    compile files('libs/hello.jar')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation "com.android.support:support-compat:28.0.0"

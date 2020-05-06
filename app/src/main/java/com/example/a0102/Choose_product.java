@@ -47,6 +47,7 @@ import java.util.Locale;
 
 import static android.content.Context.ALARM_SERVICE;
 import static android.widget.Toast.LENGTH_SHORT;
+import static com.example.a0102.Settings.ALLALL;
 import static com.example.a0102.Settings.LANGUAGE;
 import static com.example.a0102.Settings.PREFERENCES;
 import static com.example.a0102.Settings.SIZE;
@@ -407,20 +408,22 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                                 c1.add(Calendar.DATE, day1);
                                 SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-                                Cursor c = db.query("mytable1", null, null, null, null, null, null);
+                                Cursor c = db.query("mytable", null, null, null, null, null, null);
                                 ContentValues cv = new ContentValues();
                                 ContentValues cv2 = new ContentValues();
                                 cv.put("email", day1*umnoj);
                                 cv.put("name", selectedItem);
                                 cv.put("image", imagee);
+                                cv.put("gobad", 0+"");
                                 cv.put("day", c1.get(Calendar.DATE)+"");
                                 cv.put("month", c1.get(Calendar.MONTH)+"");
                                 cv.put("year", c1.get(Calendar.YEAR)+"");
                                 cv2.put("name", selectedItem);
-                                db.insert("mytable1", null, cv);
-                                 editor.putInt(selectedItem+"*all*", 1);
-                                 editor.putInt(selectedItem+"*del*", 0);
+                                db.insert("mytable", null, cv);
+                                int update=mSettings.getInt(ALLALL,0)+1;
+                                 editor.putInt(ALLALL, update);
                                  editor.apply();
+
                             if (c != null && c.moveToFirst()) {
                                 do{
                                    id=Integer.valueOf(c.getString(c.getColumnIndexOrThrow("id")));
@@ -489,7 +492,7 @@ public void Dialog3(final TextView dayofmonth1){
             });
 
     builder.show();
-    return;
+
     }
 
 

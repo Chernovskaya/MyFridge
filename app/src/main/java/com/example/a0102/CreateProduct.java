@@ -49,6 +49,7 @@ import java.util.Locale;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.ALARM_SERVICE;
 import static android.widget.Toast.LENGTH_SHORT;
+import static com.example.a0102.Settings.ALLALL;
 import static com.example.a0102.Settings.LANGUAGE;
 import static com.example.a0102.Settings.PREFERENCES;
 
@@ -86,6 +87,7 @@ public class CreateProduct extends Fragment {
     String name3;
     SharedPreferences mSettings;
     int lan;
+    SharedPreferences.Editor editor;
     String st;
     int k=0;
     int i=0;
@@ -98,6 +100,7 @@ public class CreateProduct extends Fragment {
                              Bundle savedInstanceState) {
 
         mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+     editor = mSettings.edit();
         if(mSettings.contains(LANGUAGE)) {
             lan = mSettings.getInt(LANGUAGE, 0);
         }
@@ -143,24 +146,6 @@ public class CreateProduct extends Fragment {
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         fOut=null;
         folderToSave = getContext().getCacheDir().toString();
@@ -248,7 +233,7 @@ public class CreateProduct extends Fragment {
                             else {
                                 c1.add(Calendar.DATE, day1);
                                 SQLiteDatabase db = dbHelper.getWritableDatabase();
-                                Cursor c = db.query("mytable1", null, null, null, null, null, null);
+                                Cursor c = db.query("mytable", null, null, null, null, null, null);
 
                                 ContentValues cv = new ContentValues();
 
@@ -257,9 +242,13 @@ public class CreateProduct extends Fragment {
                                 cv.put("name", name.getText().toString());
                                 cv.put("image",name3+"r");
                                 cv.put("day", c1.get(Calendar.DATE)+"");
+                                cv.put("gobad", 0+"");
                                 cv.put("month", c1.get(Calendar.MONTH)+"");
                                 cv.put("year", c1.get(Calendar.YEAR)+"");
-                                db.insert("mytable1", null, cv);
+                                db.insert("mytable", null, cv);
+                                int update=mSettings.getInt(ALLALL,0)+1;
+                                editor.putInt(ALLALL, update);
+                                editor.apply();
                                 if (c != null && c.moveToFirst()) {
                                     do{
                                         id1=Integer.valueOf(c.getString(c.getColumnIndexOrThrow("id")));

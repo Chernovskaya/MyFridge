@@ -64,7 +64,7 @@
         android:gravity="left"
         android:text="Посмотреть статистику"
         android:id="@+id/stat"
-        android:drawableLeft="@drawable/questionmark_83826"
+        android:drawableLeft="@drawable/stat"
         android:background="@drawable/shape"
         android:textSize="20dp" />
 

@@ -7,6 +7,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
+import static com.example.a0102.Settings.ALLALL;
+import static com.example.a0102.Settings.GOBAD;
+
 
 public class SplashZastavka extends Activity {
     public static final String PREFERENCES = "mysettings";
@@ -36,6 +39,8 @@ public class SplashZastavka extends Activity {
                     startActivity(i);
                     finish();
                     editor.putInt(VISIT, 1);
+                    editor.putInt(ALLALL, 0);
+                    editor.putInt(GOBAD, 0);
                     editor.apply();
                 }
 
