@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -30,6 +31,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -114,7 +117,6 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
 
         View view = inflater.inflate(R.layout.add_product, container, false);
         view.setBackgroundColor(Color.parseColor("#3f8678"));
-
         mInputSearch = view.findViewById(R.id.text2);
 
         mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
@@ -445,7 +447,8 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                                     getContext(), id, intent, 0);
                             AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
                             alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+ (day1*umnoj* 1000), pendingIntent);
-                            ((MainActivity)getActivity()).loadFragment(Home.newInstance());
+                            ((MainActivity)getActivity()).loadFragment(Home.newInstance(),1);
+
 
                             }
                         }

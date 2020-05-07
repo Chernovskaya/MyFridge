@@ -7,9 +7,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +37,7 @@ public class DDialog extends DialogFragment {
     private String spoiled;
     private String name;
     TextView textView2;
+    LinearLayout linearLayout;
 
     @NonNull
     @Override
@@ -54,6 +57,14 @@ public class DDialog extends DialogFragment {
             textView2.setText(spoiled+": "+gobad);
             PieChartView pieChartView = v.findViewById(R.id.chart);
             List<SliceValue> pie = new ArrayList<>();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        linearLayout=v.findViewById(R.id.dia);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
+        params.height = 2*height/3;
+        linearLayout.setLayoutParams(params);
+
 
             if(gobad==0){
                 pie.add(new SliceValue(100,Color.parseColor("#98e867")));
@@ -64,7 +75,7 @@ public class DDialog extends DialogFragment {
             }
 
             PieChartData pieChartData = new PieChartData(pie);
-            pieChartData.setHasCenterCircle(true).setCenterText1(total);
+            pieChartData.setHasCenterCircle(true).setCenterText1(total).setCenterText1Color(R.color.text);
             pieChartData.setHasLabels(true).setValueLabelTextSize(14);
             pieChartView.setPieChartData(pieChartData);
 

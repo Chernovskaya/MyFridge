@@ -19,7 +19,7 @@ import static com.example.a0102.Settings.LANGUAGE;
 import static com.example.a0102.Settings.PREFERENCES;
 import static com.example.a0102.Settings.SIZE;
 
-public class Add extends ListFragment{
+public class Add extends ListFragment {
 
     //настройки
     int size;

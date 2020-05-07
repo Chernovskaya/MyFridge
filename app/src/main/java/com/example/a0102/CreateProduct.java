@@ -72,8 +72,6 @@ public class CreateProduct extends Fragment {
     GregorianCalendar gcal;
     int days;
     DatePickerDialog picker;
-    Home frag2;
-    FragmentTransaction fTrans;
     Calendar c1;
     TextView dayofmonth;
     int id1;
@@ -93,7 +91,9 @@ public class CreateProduct extends Fragment {
     int i=0;
     String [] names = new String [12];
 
+    BufferedReader reader = null;
 
+    String mLine;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -115,9 +115,7 @@ public class CreateProduct extends Fragment {
         }
 
 
-        BufferedReader reader = null;
 
-        String mLine;
 
 
 
@@ -171,7 +169,6 @@ public class CreateProduct extends Fragment {
         dbHelper=new MYSQL(getContext());
         name=view.findViewById(R.id.name);
         name.setHint(names[0]);
-        frag2 = new Home();
         days=0;
         c1 = Calendar.getInstance();
         cldr = Calendar.getInstance();
@@ -270,9 +267,7 @@ public class CreateProduct extends Fragment {
                                 AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
                                 alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+ day1 * 1000*umnoj, pendingIntent);
 
-                                fTrans = getFragmentManager().beginTransaction();
-                                fTrans.replace(R.id.fragments, frag2);
-                                fTrans.commit();
+                                ((MainActivity)getActivity()).loadFragment(Home.newInstance(),1);
                             }
                         }
                     }

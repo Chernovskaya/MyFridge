@@ -9,25 +9,31 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    public BottomNavigationView navigation;
+  public BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    loadFragment(Home.newInstance());
-                    return true;
+                    item.setChecked(true);
+                    loadFragment(Home.newInstance(),0);
+                    return false;
                 case R.id.navigation_add:
-                    loadFragment(Add.newInstance());
+                    item.setChecked(true);
+                    loadFragment(Add.newInstance(),0);
 
-                    return true;
+                    return false;
                 case R.id.navigation_news:
-                    loadFragment(Settings.newInstance());
-                    return true;
+                    item.setChecked(true);
+                    loadFragment(Settings.newInstance(),0);
+                    return false;
             }
             return false;
         }
@@ -36,12 +42,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        loadFragment(Home.newInstance());
+        navigation = findViewById(R.id.navigation);
+        loadFragment(Home.newInstance(),1);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
@@ -67,9 +74,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void loadFragment(Fragment fragment) {
+    public void loadFragment(Fragment fragment,int n) {
         FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
         fr.replace(R.id.fragments, fragment).commit();
+        if (n==1){
+            navigation.setSelectedItemId(R.id.navigation_home);
+        }
+
 
     }
+
 }
+

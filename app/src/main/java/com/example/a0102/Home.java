@@ -229,7 +229,12 @@ public class Home extends Fragment{
             TextView textView=new TextView(getContext());
             textView.setBackgroundResource(R.drawable.shape2);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,25);
-            textView.setText("Нет испорченных продуктов");
+            if(lan==0){
+                textView.setText("Нет испорченных продуктов");
+            }
+            else{
+                textView.setText("No spoiled foods");
+            }
             textView.setPadding(10,5,10,5);
             LinearLayout linearLayout = new LinearLayout(getContext());
             linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -319,7 +324,6 @@ public class Home extends Fragment{
                         break;
                     }
                 }
-
                 int one_d=Integer.parseInt(dayc);
                 int two_d=Integer.parseInt(cal.get(Calendar.DATE)+"");
                 int one_m=Integer.parseInt(monthc);
