@@ -130,6 +130,8 @@ public class Home extends Fragment{
 
     DialogFragment dlg;
     BufferedReader reader;
+    Boolean is=true;
+    LinearLayout mRootFrameLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -137,7 +139,7 @@ public class Home extends Fragment{
         view = inflater.inflate(R.layout.home, container, false);
         layout=view.findViewById(R.id.fragments);
         frameLayout=view.findViewById(R.id.fragmentsss);
-
+        mRootFrameLayout =view.findViewById(R.id.kuku);
 
         //содзание для БД
         dbHelper = new MYSQL(getContext());
@@ -219,6 +221,24 @@ public class Home extends Fragment{
         //всякие списки адпаптеры
         fillData(view);
 
+
+
+
+        if (is){
+
+            TextView textView=new TextView(getContext());
+            textView.setBackgroundResource(R.drawable.shape2);
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,25);
+            textView.setText("Нет испорченных продуктов");
+            textView.setPadding(10,5,10,5);
+            LinearLayout linearLayout = new LinearLayout(getContext());
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+            linearLayout.setPadding(0,30,0,0);
+            linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            linearLayout.addView(textView);
+            mRootFrameLayout.addView(linearLayout);
+
+        }
         listView = view.findViewById(R.id.listView2);
         adapter = new HomeAdapter(getContext(), spisok,size);
         listView.setAdapter(adapter);
@@ -299,6 +319,7 @@ public class Home extends Fragment{
                         break;
                     }
                 }
+
                 int one_d=Integer.parseInt(dayc);
                 int two_d=Integer.parseInt(cal.get(Calendar.DATE)+"");
                 int one_m=Integer.parseInt(monthc);
@@ -306,18 +327,31 @@ public class Home extends Fragment{
                 int one_y=Integer.parseInt(yearc);
                 int two_y=Integer.parseInt(cal.get(Calendar.YEAR)+"");
                  if ((one_y==two_y && ( (one_m==two_m && one_d>two_d) || (one_m>two_m)))  || (one_y>two_y)    ) {
+                     Calendar c3 = Calendar.getInstance();
+                     c3.set(Calendar.MONTH, Integer.parseInt(monthc));
+                     c3.set(Calendar.DATE, Integer.parseInt(dayc));
+                     c3.set(Calendar.YEAR, Integer.parseInt(yearc));
+                     Date three = c3.getTime();
+                     gcal = new GregorianCalendar();
+                     Calendar c4 = Calendar.getInstance();
+                     c4.set(Calendar.MONTH, gcal.get(Calendar.MONTH));
+                     c4.set(Calendar.DATE, gcal.get(Calendar.DAY_OF_MONTH));
+                     c4.set(Calendar.YEAR, gcal.get(Calendar.YEAR));
+                     Date four= c4.getTime();
+                     int n = Days.daysBetween(new DateTime(four), new DateTime(three)).getDays();
                      if (image.contains("146r")) {
-                         spisok.add(new ItemProduct(name, arrayimage[146], day, id, ""));
+                         spisok.add(new ItemProduct(name, arrayimage[146], day, id, "",n));
                      } else {
                          if (image.contains("r")) {
-                             spisok.add(new ItemProduct(name, 666, day, id, image));
+                             spisok.add(new ItemProduct(name, 666, day, id, image,n));
                          } else {
                              image1 = Integer.parseInt(image);
-                             spisok.add(new ItemProduct(name, arrayimage[image1], day, id, ""));
+                             spisok.add(new ItemProduct(name, arrayimage[image1], day, id, "",n));
                          }
                      }
                  }
                  else{
+                     is=false;
                      ContentValues values = new ContentValues();
                      values.put("gobad", "1");
                      if(bool.contains("0")){
@@ -402,7 +436,6 @@ void creating(final View view1,final int id, String foruri){
     params.height=101;
 
     //объект
-    LinearLayout mRootFrameLayout =view1.findViewById(R.id.kuku);
     LinearLayout linearLayout = new LinearLayout(getContext());
     linearLayout.setOrientation(LinearLayout.VERTICAL);
 

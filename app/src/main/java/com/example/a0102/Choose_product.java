@@ -249,7 +249,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                 if(search!="") {
                     for (int i = len1; i < len2+1; i++) {
                         if (arrayname[i].toLowerCase().contains(search)) {
-                            sort.add(new ItemProduct(arrayname[i], arrayimage[i], 5,0,""));
+                            sort.add(new ItemProduct(arrayname[i], arrayimage[i], 5,0,"",0));
                         }
                     }
                 }
@@ -280,7 +280,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void fillData() {
         for (int i = len1; i <len2+1 ; i++) {
-            productss.add(new ItemProduct(arrayname[i], arrayimage[i],days[1],0,""));
+            productss.add(new ItemProduct(arrayname[i], arrayimage[i],days[1],0,"",0));
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////

@@ -32,7 +32,7 @@
         android:layout_marginBottom="10dp"
         android:text="Изменить размер шрифта"
         android:id="@+id/sizetext"
-        android:background="@drawable/shape"
+        android:background="@drawable/shape10"
         android:textSize="20dp" />
     <TextView
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
         android:gravity="left"
         android:id="@+id/language"
         android:drawableLeft="@drawable/lan"
-        android:background="@drawable/shape"
+        android:background="@drawable/shape10"
         android:textSize="20dp" />
     <TextView
         android:layout_width="match_parent"
@@ -54,7 +54,7 @@
         android:text="Посмотреть инструкция"
         android:id="@+id/how"
         android:drawableLeft="@drawable/questionmark_83826"
-        android:background="@drawable/shape"
+        android:background="@drawable/shape10"
         android:textSize="20dp" />
     <TextView
         android:layout_width="match_parent"
@@ -65,7 +65,7 @@
         android:text="Посмотреть статистику"
         android:id="@+id/stat"
         android:drawableLeft="@drawable/stat"
-        android:background="@drawable/shape"
+        android:background="@drawable/shape10"
         android:textSize="20dp" />
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
+
+import lecho.lib.hellocharts.model.PieChartData;
+import lecho.lib.hellocharts.model.SliceValue;
+import lecho.lib.hellocharts.view.PieChartView;
 
 public class HomeAdapter extends BaseAdapter {
 
@@ -66,10 +72,19 @@ public class HomeAdapter extends BaseAdapter {
         r.setText(p.name1);
         r.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
 
-        TextView r1=view.findViewById(R.id.textView2);
-        r1.setText(p.days+"");
-        r1.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
 
+        PieChartView pieChartView = view.findViewById(R.id.chart);
+        List<SliceValue> pie = new ArrayList<>();
+
+
+            pie.add(new SliceValue(p.days-(p.days-p.days1),Color.parseColor("#b1db22")));
+            pie.add(new SliceValue(p.days-p.days1, Color.parseColor("#f0ad2a")));
+
+
+        PieChartData pieChartData = new PieChartData(pie);
+        pieChartData.setHasCenterCircle(true).setCenterText1("");
+        pieChartData.setHasLabels(true).setValueLabelTextSize(14);
+        pieChartView.setPieChartData(pieChartData);
 
 
         ImageView imageView=view.findViewById(R.id.image);
