@@ -4,15 +4,28 @@
     android:background="#008577"
 
     android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/set"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Настройки"
-        android:background="@drawable/shape1"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:textSize="40dp" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/set"
+            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:text="Настройки"
+            android:background="@drawable/shape1"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:textSize="40dp" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="right"
+            android:background="@drawable/sett"
+            android:layout_height="wrap_content"/>
+
+    </FrameLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -28,6 +41,7 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/size"
         android:gravity="left"
+        android:padding="10dp"
         android:drawablePadding="20dp"
         android:layout_marginBottom="10dp"
         android:text="Изменить размер шрифта"
@@ -39,6 +53,7 @@
         android:layout_height="wrap_content"
         android:drawablePadding="20dp"
         android:layout_marginBottom="10dp"
+        android:padding="10dp"
         android:text="Выбрать язык"
         android:gravity="left"
         android:id="@+id/language"
@@ -47,13 +62,14 @@
         android:textSize="20dp" />
     <TextView
         android:layout_width="match_parent"
+        android:padding="10dp"
         android:layout_height="wrap_content"
         android:drawablePadding="20dp"
         android:layout_marginBottom="10dp"
         android:gravity="left"
         android:text="Посмотреть инструкция"
         android:id="@+id/how"
-        android:drawableLeft="@drawable/questionmark_83826"
+        android:drawableLeft="@drawable/questionmark"
         android:background="@drawable/shape10"
         android:textSize="20dp" />
     <TextView
@@ -61,6 +77,7 @@
         android:layout_height="wrap_content"
         android:drawablePadding="20dp"
         android:layout_marginBottom="10dp"
+        android:padding="10dp"
         android:gravity="left"
         android:text="Посмотреть статистику"
         android:id="@+id/stat"

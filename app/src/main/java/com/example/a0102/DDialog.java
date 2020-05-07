@@ -60,7 +60,7 @@ public class DDialog extends DialogFragment {
             }
             else{
                 pie.add(new SliceValue(allall,Color.parseColor("#98e867")));
-                pie.add(new SliceValue(gobad, Color.parseColor("#fd4100")));
+                pie.add(new SliceValue(gobad, Color.parseColor("#f0ad2a")));
             }
 
             PieChartData pieChartData = new PieChartData(pie);
