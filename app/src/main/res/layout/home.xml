@@ -40,7 +40,7 @@
         android:background="@drawable/shape3">
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:padding="20dp"
+            android:padding="15dp"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/data"

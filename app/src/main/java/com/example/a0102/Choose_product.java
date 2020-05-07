@@ -107,6 +107,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
     int i=0;
     String [] add=new String[15];
     int k=0;
+    Boolean is=true;
 
     public Choose_product(int number) {
         this.number=number;
@@ -231,8 +232,11 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
             @Override
             public void onClick(View view) {
                 Dialog(add[0],add[1]);
+
+
             }
         });
+
         fillData();
         dbHelper=new MYSQL(getContext());
 
@@ -297,7 +301,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
     }
 
     private void Dialog(String title, String content) {
-        fab.hide();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(title);
         builder.setMessage(content);
@@ -305,7 +309,8 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
-                            fab.show();
+
+
                     }
                 });
         builder.setPositiveButton("OK",
@@ -313,6 +318,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
+
                         fTrans = getFragmentManager().beginTransaction();
                         fTrans.replace(R.id.fragments, frag2);
                         fTrans.commit();
@@ -457,7 +463,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
         builder.show();
     }
 
-public void Dialog3(final TextView dayofmonth1){
+private void Dialog3(final TextView dayofmonth1){
     final String[] array = {add[10],add[11]};
     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
     builder.setTitle(add[12])

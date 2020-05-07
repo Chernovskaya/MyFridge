@@ -106,8 +106,7 @@ public class Home extends Fragment{
             R.drawable.g124,R.drawable.g125,R.drawable.g126,R.drawable.g127,R.drawable.g128,
             R.drawable.g129,R.drawable.g130,R.drawable.g131,R.drawable.g132,R.drawable.g133,R.drawable.g134,R.drawable.g135,R.drawable.g136,
             R.drawable.g137,R.drawable.g138,R.drawable.g139,R.drawable.g140,R.drawable.g141,R.drawable.g142,R.drawable.g143,
-            R.drawable.g144,R.drawable.g145,R.drawable.g146,R.drawable.question_115172
-    };
+            R.drawable.g144,R.drawable.g145,R.drawable.g146,R.drawable.question_115172};
     ArrayList<ItemProduct> spisok = new ArrayList<ItemProduct>();
     View view;
 

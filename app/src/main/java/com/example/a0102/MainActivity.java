@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         navigation = findViewById(R.id.navigation);
+
         loadFragment(Home.newInstance(),1);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
