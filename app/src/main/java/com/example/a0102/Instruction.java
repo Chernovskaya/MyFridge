@@ -27,7 +27,7 @@ public class Instruction extends AppCompatActivity {
     int i=0;
     Button btn1,btn2,btn3;
     SharedPreferences mSettings;
-    LinearLayout layout1,first,buttons;
+    LinearLayout layout1,buttons;
     int lan;
     String st;
     int k;
@@ -84,7 +84,6 @@ public class Instruction extends AppCompatActivity {
         btn2.setText(names[1]);
         btn3=findViewById(R.id.button2);
         layout1=findViewById(R.id.fon);
-        first=findViewById(R.id.first);
         buttons=findViewById(R.id.fon);
         btn1.setText(names[2]);
         layout1.setBackgroundResource(image[i]);
