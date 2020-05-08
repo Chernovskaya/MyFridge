@@ -27,8 +27,6 @@ public class Instruction extends AppCompatActivity {
     int i=0;
     Button btn1,btn2,btn3;
     SharedPreferences mSettings;
-    SharedPreferences.Editor editor;
-
     LinearLayout layout1,first,buttons;
     int lan;
     String st;
