@@ -18,6 +18,10 @@ public class MYSQL extends SQLiteOpenHelper {
                         + "year text,"
                         + "gobad text,"
                         + "name text" + ");");
+        db.execSQL("create table mytable1 ("
+                + "id integer primary key autoincrement,"
+                + "status text,"
+                + "name text" + ");");
 
     }
     @Override

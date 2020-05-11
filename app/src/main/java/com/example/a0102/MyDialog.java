@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,6 +113,7 @@ public class MyDialog extends DialogFragment  {
         }
 
         View v = inflater.inflate(R.layout.info, null);
+
         TextView textView=v.findViewById(R.id.textView3);
         TextView textView2=v.findViewById(R.id.textView4);
         TextView textView3=v.findViewById(R.id.textView5);
@@ -141,7 +144,7 @@ public class MyDialog extends DialogFragment  {
                 imageView.setImageResource(arrayimage[index]);
             }
         }
-        builder.setTitle(names[4]);
+        builder.setTitle(names[4]).setIcon(R.drawable.information_);
         builder.setView(v);
         return builder.create();
     }

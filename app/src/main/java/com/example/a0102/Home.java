@@ -14,6 +14,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
@@ -21,11 +23,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -41,6 +46,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -107,7 +114,9 @@ public class Home extends Fragment{
             R.drawable.g129,R.drawable.g130,R.drawable.g131,R.drawable.g132,R.drawable.g133,R.drawable.g134,R.drawable.g135,R.drawable.g136,
             R.drawable.g137,R.drawable.g138,R.drawable.g139,R.drawable.g140,R.drawable.g141,R.drawable.g142,R.drawable.g143,
             R.drawable.g144,R.drawable.g145,R.drawable.g146,R.drawable.question_115172};
-    ArrayList<ItemProduct> spisok = new ArrayList<ItemProduct>();
+    private ArrayList<ItemProduct> spisok = new ArrayList<ItemProduct>();
+    private ArrayList<ItemProduct> sort = new ArrayList<ItemProduct>();
+
     View view;
 
     int index;
@@ -122,8 +131,8 @@ public class Home extends Fragment{
 
     int k=0;
     int i =0;
-    String names[]=new String[146];
-    String names1[]=new String[146];
+    String names[]=new String[147];
+    String names1[]=new String[147];
     int days;
     int lan;
 
@@ -131,11 +140,20 @@ public class Home extends Fragment{
     BufferedReader reader;
     Boolean is=true;
     LinearLayout mRootFrameLayout;
+    EditText search;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.home, container, false);
+        ImageView imageView=view.findViewById(R.id.note);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               DialogFragment dlg1=new CheckProduct();
+                dlg1.show(getFragmentManager(), "dlg1");
+            }
+        });
         layout=view.findViewById(R.id.fragments);
         frameLayout=view.findViewById(R.id.fragmentsss);
         mRootFrameLayout =view.findViewById(R.id.kuku);
@@ -167,7 +185,7 @@ public class Home extends Fragment{
 
             while ((mLine = reader.readLine())!= null) {
                 k=k+1;
-                if (k<=146 ) {
+                if (k<=146 || k==226) {
                     names[i] = mLine.replace(",", "");
                     i += 1;
                 }
@@ -194,7 +212,7 @@ public class Home extends Fragment{
 
             while ((mLine = reader.readLine())!= null) {
                 k=k+1;
-                if (k<=146) {
+                if (k<=146 || k==226) {
                     names1[i] = mLine.replace(",", "");
                     i += 1;
                 }
@@ -216,10 +234,11 @@ public class Home extends Fragment{
         main.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
         main.setText(dateText+" ");
 
+        search=view.findViewById(R.id.search);
 
         //всякие списки адпаптеры
         fillData(view);
-
+        Collections.sort(spisok, ItemProduct.COMPARE);
 
 
 
@@ -244,7 +263,7 @@ public class Home extends Fragment{
 
         }
         listView = view.findViewById(R.id.listView2);
-        adapter = new HomeAdapter(getContext(), spisok,size);
+        adapter = new HomeAdapter(getContext(),spisok,size);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -285,6 +304,30 @@ public class Home extends Fragment{
                 n=0;
             }
         }
+        if (lan == 0) {search.setHint(names[146]);}else{search.setHint(names1[146]);}
+
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                sort.clear();
+                String search_= search.getText().toString().toLowerCase().trim();
+                if(search_!="") {
+                    for (int i = 0; i < spisok.size(); i++) {
+                        if (spisok.get(i).getName().toLowerCase().contains(search_)) {
+                            sort.add(new ItemProduct(spisok.get(i).getName(),spisok.get(i).getImage(),spisok.get(i).getDays(),spisok.get(i).getId(),spisok.get(i).getImage1(),spisok.get(i).getDays1()));
+                        }
+                    }
+                }
+                adapter = new HomeAdapter(getContext(),sort,size);
+                listView.setAdapter(adapter);
+            }
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+            }
+            @Override
+            public void afterTextChanged(Editable arg0) {
+            }
+        });
         return view;
     }
 
@@ -533,6 +576,7 @@ void creating(final View view1,final int id, String foruri){
        dlg.show(getFragmentManager(), "dlg");
 
     }
+
 }
 
 

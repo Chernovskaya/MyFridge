@@ -418,7 +418,6 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
 
                                 Cursor c = db.query("mytable", null, null, null, null, null, null);
                                 ContentValues cv = new ContentValues();
-                                ContentValues cv2 = new ContentValues();
                                 cv.put("email", day1*umnoj);
                                 cv.put("name", selectedItem);
                                 cv.put("image", imagee);
@@ -426,7 +425,6 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                                 cv.put("day", c1.get(Calendar.DATE)+"");
                                 cv.put("month", c1.get(Calendar.MONTH)+"");
                                 cv.put("year", c1.get(Calendar.YEAR)+"");
-                                cv2.put("name", selectedItem);
                                 db.insert("mytable", null, cv);
                                 int update=mSettings.getInt(ALLALL,0)+1;
                                  editor.putInt(ALLALL, update);

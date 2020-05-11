@@ -17,7 +17,6 @@
             android:id="@+id/button2"
            android:layout_gravity="right"
             android:background="#7994EED5"
-            android:padding="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"

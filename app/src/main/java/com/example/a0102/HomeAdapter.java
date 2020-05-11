@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import lecho.lib.hellocharts.listener.PieChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.SliceValue;
 import lecho.lib.hellocharts.view.PieChartView;
@@ -74,6 +75,7 @@ public class HomeAdapter extends BaseAdapter {
 
 
         PieChartView pieChartView = view.findViewById(R.id.chart);
+
         List<SliceValue> pie = new ArrayList<>();
 
 
@@ -85,8 +87,6 @@ public class HomeAdapter extends BaseAdapter {
         pieChartData.setHasCenterCircle(true).setCenterText1("");
         pieChartData.setHasLabels(true).setValueLabelTextSize(14);
         pieChartView.setPieChartData(pieChartData);
-
-
         ImageView imageView=view.findViewById(R.id.image);
 
        if(p.image1==666){

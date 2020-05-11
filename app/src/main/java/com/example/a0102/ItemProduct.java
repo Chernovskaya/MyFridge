@@ -1,5 +1,7 @@
 package com.example.a0102;
 
+import java.util.Comparator;
+
 public class ItemProduct {
     String name1;
     int image1;
@@ -21,11 +23,23 @@ public class ItemProduct {
     public int getImage() {
         return image1;
     }
+    public String getImage1() {
+        return image2;
+    }
     public int getDays() {
         return days;
+    }
+    public int getDays1() {
+        return days1;
     }
     public int getId() {
         return id;
     }
+    public static final Comparator<ItemProduct> COMPARE = new Comparator<ItemProduct>() {
+        @Override
+        public int compare(ItemProduct first, ItemProduct second) {
+            return first.getDays1() - second.getDays1();
+        }
+    };
 }
 

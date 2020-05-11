@@ -71,7 +71,7 @@ Horsemeat,
 Bacon,
 Potatoes,
 Radish,
-Wasabi
+Wahhabi
 Carrot,
 A tomato,
 Cabbage,
@@ -222,3 +222,5 @@ Statistics
 Total
 Spoiled
 Eaten up(will be eaten)
+
+search
