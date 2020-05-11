@@ -402,7 +402,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                             day1=g1;
                             if(!textday.getText().toString().isEmpty()) {
                              try {
-                                 day1 = (Integer.parseInt(textday.getText().toString())) - days1;
+                                 day1 = (Integer.parseInt(textday.getText().toString()))*umnoj - days1;
 
                              }
                              catch (NumberFormatException e){
@@ -413,7 +413,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                         if (day1<=0) {
                             Toast.makeText(getContext(), add[9], LENGTH_SHORT).show();
                         } else {
-                                c1.add(Calendar.DATE, day1);
+                                c1.add(Calendar.DATE, day1*umnoj);
                                 SQLiteDatabase db = dbHelper.getWritableDatabase();
 
                                 Cursor c = db.query("mytable", null, null, null, null, null, null);

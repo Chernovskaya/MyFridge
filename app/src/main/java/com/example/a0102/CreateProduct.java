@@ -228,7 +228,7 @@ public class CreateProduct extends Fragment {
 
                             }
                             else {
-                                c1.add(Calendar.DATE, day1);
+                                c1.add(Calendar.DATE, day1*umnoj);
                                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                                 Cursor c = db.query("mytable", null, null, null, null, null, null);
 
