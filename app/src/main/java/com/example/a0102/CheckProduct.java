@@ -73,16 +73,6 @@ public class CheckProduct extends Fragment{
         view.setBackgroundColor(Color.parseColor("#1e1e1e"));
         dbHelper = new MYSQL(getContext());
         ImageView imageView=view.findViewById(R.id.plus);
-        ImageView imageView1=view.findViewById(R.id.back);
-        imageView1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment frg = new Home();
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fragments, frg);
-                ft.commit();
-            }
-        });
      imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
