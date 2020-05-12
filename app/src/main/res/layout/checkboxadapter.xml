@@ -3,16 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
+    android:background="#222222"
     android:layout_height="wrap_content">
     <CheckBox
         android:id="@+id/checkbox"
+        android:textColor="#ffffff"
+        android:theme="@style/CheckBox"
         android:layout_width="match_parent"
         android:layout_marginRight="48dp"
         android:layout_height="wrap_content">
     </CheckBox>
     <ImageView
         android:id="@+id/rub"
-        app:srcCompat="@drawable/trashcan_106521"
+        app:srcCompat="@drawable/trash"
         android:layout_marginLeft="-48dp"
         android:layout_width="wrap_content"
         android:layout_gravity="right"

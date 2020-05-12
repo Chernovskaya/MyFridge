@@ -115,6 +115,7 @@ public class MyDialog extends DialogFragment  {
         View v = inflater.inflate(R.layout.info, null);
 
         TextView textView=v.findViewById(R.id.textView3);
+        TextView textView0=v.findViewById(R.id.textView);
         TextView textView2=v.findViewById(R.id.textView4);
         TextView textView3=v.findViewById(R.id.textView5);
         TextView textView4=v.findViewById(R.id.textView6);
@@ -144,7 +145,7 @@ public class MyDialog extends DialogFragment  {
                 imageView.setImageResource(arrayimage[index]);
             }
         }
-        builder.setTitle(names[4]).setIcon(R.drawable.information_);
+        textView0.setText(names[4]);
         builder.setView(v);
         return builder.create();
     }

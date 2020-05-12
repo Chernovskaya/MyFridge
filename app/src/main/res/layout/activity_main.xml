@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:id="@+id/bbb"
-    android:background="#3f8678"
+    android:background="#1B1A1A"
     tools:context=".MainActivity">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -15,6 +15,7 @@
 
     <FrameLayout
         android:id="@+id/fragments"
+        android:foregroundGravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="56dp"
@@ -25,7 +26,7 @@
         android:id="@+id/navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/color_back"
+        android:background="#151719"
         app:layout_constraintBottom_toBottomOf="parent"
         app:itemIconTint="@color/items"
         app:itemTextColor="@color/items"

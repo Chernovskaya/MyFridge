@@ -11,25 +11,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_back"
+        android:background="#222222"
         android:layout_gravity="center"
         android:orientation="horizontal"
         >
 
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="263dp"
-            android:layout_gravity="left">
+           android:orientation="vertical"
+            android:layout_height="wrap_content">
+
 
             <ImageView
                 android:id="@+id/image"
-                android:src="@drawable/photo"
+                android:layout_marginTop="30dp"
                 android:layout_width="181dp"
                 android:layout_height="175dp"
                 android:layout_gravity="center"
+                android:src="@drawable/photo"
                 app:srcCompat="@color/colorbotton" />
-        </FrameLayout>
+        </LinearLayout>
 
 
 
@@ -43,7 +45,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="126dp"
                     android:layout_gravity="center"
+                    android:theme="@style/Theme.App.Base"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
                     android:inputType="text"
+                    android:textColorHint="#ffffff"
                     android:hint="Введите название" />
 
                 <TextView
@@ -51,6 +57,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
                     android:hint="дата изготовления"
                     android:inputType="date" />
                 <LinearLayout
@@ -63,18 +71,24 @@
                         android:layout_width="134dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#ffffff"
+                        android:theme="@style/Theme.App.Base"
                         android:hint="срок годности"
                         android:inputType="number" />
                     <TextView
                         android:layout_width="match_parent"
                         android:text="дни"
+                        android:textColor="#ffffff"
                         android:id="@+id/dayofmonth1"
+                        android:gravity="center"
                         android:layout_height="match_parent"/>
             </LinearLayout>
 
                 <Button
                     android:id="@+id/button"
-                    android:layout_width="match_parent"
+                    android:background="#ed6b02"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
                     android:text="Ok" />

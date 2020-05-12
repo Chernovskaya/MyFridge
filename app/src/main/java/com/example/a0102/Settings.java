@@ -12,6 +12,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -33,7 +34,7 @@ public class Settings extends Fragment {
 
 
     int s = 30;
-    int d;
+    int d=30;
     TextView sizetext;
     TextView language;
     TextView how;
@@ -45,7 +46,6 @@ public class Settings extends Fragment {
     int lan;
     String [] names=new String[16];
     int k=0;
-    FragmentTransaction fTrans;
     int i=0;
 
     public Settings() {
@@ -141,7 +141,7 @@ public class Settings extends Fragment {
                 dialog1(sizes,names[7],names[8],0);
             }
         });
-        view.setBackgroundColor(Color.parseColor("#008577"));
+        view.setBackgroundColor(Color.parseColor("#1e1e1e"));
         return view;
     }
 
@@ -201,7 +201,13 @@ public class Settings extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                     }
                 });
-        builder.show();
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        Button b = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+        b.setTextColor(getResources().getColor(R.color.bad));
+        Button b1 = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        b1.setTextColor(getResources().getColor(R.color.bad));
     }
     void dialog2() {
 
@@ -224,7 +230,13 @@ public class Settings extends Fragment {
                     }
 
                 });
-        builder.show();
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        Button b = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+        b.setTextColor(getResources().getColor(R.color.bad));
+        Button b1 = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        b1.setTextColor(getResources().getColor(R.color.bad));
     }
 
 

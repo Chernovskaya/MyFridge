@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:background="#3f8678"
+    android:background="#000000"
     android:layout_height="match_parent">
     <FrameLayout
         android:layout_width="match_parent"
@@ -16,8 +16,10 @@
         <Button
             android:id="@+id/button2"
            android:layout_gravity="right"
-            android:background="#7994EED5"
+            android:background="#B4ED6B02"
+            android:textColor="#ffffff"
             android:layout_width="wrap_content"
+            android:textSize="10dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Пропустить" />
@@ -26,7 +28,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="15"
+            android:layout_weight="20"
             android:id="@+id/buttons"
             android:orientation="horizontal">
             <Button
@@ -34,13 +36,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#3f8678"
+                android:textColor="#ffffff"
+                android:background="#ed6b02"
                 android:text="Назад" />
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="wrap_content"
-                android:background="#3f8678"
+                android:background="#ed6b02"
+                android:textColor="#ffffff"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Вперед" />

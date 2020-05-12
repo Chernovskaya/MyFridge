@@ -75,7 +75,7 @@ public class DDialog extends DialogFragment {
             }
 
             PieChartData pieChartData = new PieChartData(pie);
-            pieChartData.setHasCenterCircle(true).setCenterText1(total).setCenterText1Color(R.color.text);
+            pieChartData.setHasCenterCircle(true).setCenterText1(total).setCenterText1Color(Color.parseColor("#ffffff"));
             pieChartData.setHasLabels(true).setValueLabelTextSize(14);
             pieChartView.setPieChartData(pieChartData);
 

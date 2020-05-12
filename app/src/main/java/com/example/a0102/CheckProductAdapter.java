@@ -1,17 +1,11 @@
 package com.example.a0102;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.FragmentManager;
+
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,27 +13,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
-
-import lecho.lib.hellocharts.model.PieChartData;
-import lecho.lib.hellocharts.model.SliceValue;
-import lecho.lib.hellocharts.view.PieChartView;
-
 import static com.example.a0102.Settings.PREFERENCES;
 import static com.example.a0102.Settings.SIZE;
 
-public class CheckProductAdapter extends BaseAdapter {
+public class CheckProductAdapter extends BaseAdapter implements DialogInterface.OnDismissListener{
 
     //настройки
     int size;
@@ -48,14 +32,20 @@ public class CheckProductAdapter extends BaseAdapter {
     ArrayList<CheckProductExample> objects;
     SQLiteDatabase db;
     SharedPreferences mSettings;
+
     MYSQL dbHelper;
-    DialogFragment dlg;
-    androidx.fragment.app.FragmentManager manager;
-    Dialog dialog;
-    CheckProductAdapter(Context context, ArrayList<CheckProductExample> products, int size1, DialogFragment dlg1) {
+    DialogInterface dlg;
+
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+
+    }
+
+
+    CheckProductAdapter(Context context, ArrayList<CheckProductExample> products, int size1) {
+
         ctx = context;
         objects = products;
-        dlg=dlg1;
 
         size = size1;
         lInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -87,6 +77,7 @@ public class CheckProductAdapter extends BaseAdapter {
         if (view == null) {
             view = lInflater.inflate(R.layout.checkboxadapter, parent, false);
         }
+
         mSettings = ctx.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         if (mSettings.contains(SIZE)) {
             size = mSettings.getInt(SIZE, 0);
@@ -131,12 +122,21 @@ public class CheckProductAdapter extends BaseAdapter {
         @Override
         public void onClick(View view) {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
+            AppCompatActivity activity = (AppCompatActivity) view.getContext();
             db.delete("mytable1", "id = "+String.valueOf(p.id2),null);
-
+            Fragment frg = new CheckProduct();
+            FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fragments, frg);
+            ft.commit();
         }
     });
         return view;
     }
 
+
+
 }
+
+
+
 

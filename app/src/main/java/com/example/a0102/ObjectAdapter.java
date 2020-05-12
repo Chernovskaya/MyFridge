@@ -65,6 +65,7 @@ public class ObjectAdapter extends BaseAdapter {
         viewHolder.nameView.setText(p.name1);
         viewHolder.nameView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, size);
         viewHolder.dayView.setText(p.days + " ");
+
         viewHolder.dayView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, size);
 
         return convertView;

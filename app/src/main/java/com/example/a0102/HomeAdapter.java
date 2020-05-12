@@ -79,8 +79,8 @@ public class HomeAdapter extends BaseAdapter {
         List<SliceValue> pie = new ArrayList<>();
 
 
-            pie.add(new SliceValue(p.days-(p.days-p.days1),Color.parseColor("#b1db22")));
-            pie.add(new SliceValue(p.days-p.days1, Color.parseColor("#f0ad2a")));
+            pie.add(new SliceValue(p.days-(p.days-p.days1),Color.parseColor("#ed6b02")));
+            pie.add(new SliceValue(p.days-p.days1, Color.parseColor("#A39B9B")));
 
 
         PieChartData pieChartData = new PieChartData(pie);

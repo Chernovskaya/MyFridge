@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -55,7 +56,7 @@ import static com.example.a0102.Settings.LANGUAGE;
 import static com.example.a0102.Settings.PREFERENCES;
 import static com.example.a0102.Settings.SIZE;
 
-public class Choose_product extends Fragment implements AdapterView.OnItemClickListener {
+public class Choose_product extends Fragment implements AdapterView.OnItemClickListener{
     ArrayList<ItemProduct> productss = new ArrayList<ItemProduct>();
     ArrayList<ItemProduct> sort = new ArrayList<ItemProduct>();
 
@@ -117,7 +118,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.add_product, container, false);
-        view.setBackgroundColor(Color.parseColor("#3f8678"));
+        view.setBackgroundColor(Color.parseColor("#1e1e1e"));
         mInputSearch = view.findViewById(R.id.text2);
 
         mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
@@ -324,7 +325,14 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                         fTrans.commit();
                     }
                 });
-        builder.show();
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.setCancelable(false);
+        Button b = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+        b.setTextColor(getResources().getColor(R.color.bad));
+        Button b1 = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        b1.setTextColor(getResources().getColor(R.color.bad));
     }
     private void Dialog2(final int g1) {
         currentDate = new Date();
@@ -332,10 +340,11 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
         dateText = dateFormat.format(currentDate);
         fab.hide();
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(add[3]);
         view1 = (LinearLayout) getLayoutInflater().inflate(R.layout.change, null);
         builder.setView(view1);
         final TextView tvTime =view1.findViewById(R.id.textdata);
+        final TextView textView =view1.findViewById(R.id.text);
+        textView.setText(add[3]);
         final EditText textday = view1.findViewById(R.id.textdays);
         final TextView dayormonth=view1.findViewById(R.id.dayormonth);
         final TextView srok=view1.findViewById(R.id.srok);
@@ -395,6 +404,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
+
                         if (textday.getText().length() == 0){
                             Toast.makeText(getContext(),add[7], Toast.LENGTH_LONG).show();
                         }
@@ -456,9 +466,19 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
 
                             }
                         }
+
                     }
                 });
-        builder.show();
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.setCancelable(false);
+        Button b = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+        b.setTextColor(getResources().getColor(R.color.bad));
+        Button b1 = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        b1.setTextColor(getResources().getColor(R.color.bad));
+
+
     }
 
 private void Dialog3(final TextView dayofmonth1){
@@ -497,8 +517,14 @@ private void Dialog3(final TextView dayofmonth1){
                     umnoj=1;
                 }
             });
+    AlertDialog dialog = builder.create();
+    dialog.show();
 
-    builder.show();
+    Button b = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+    b.setTextColor(getResources().getColor(R.color.bad));
+
+    Button b1 = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+    b1.setTextColor(getResources().getColor(R.color.bad));
 
     }
 

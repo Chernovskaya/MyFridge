@@ -25,16 +25,16 @@
                     android:layout_height="match_parent"
                     android:padding="5dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/fon1" />
+                    android:background="@drawable/shape12" />
             </FrameLayout>
 
             <TextView
                 android:id="@+id/text"
-                android:textStyle="bold|italic"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="206dp"
                 android:layout_marginLeft="5dp"
-
+                android:textColor="#CEC5C5"
                 android:gravity="center"
                 android:text="Название"
                 android:textSize="20sp" />

@@ -1,28 +1,24 @@
 package com.example.a0102;
 
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -30,7 +26,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -39,16 +34,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-
-import static android.content.Context.ALARM_SERVICE;
 import static com.example.a0102.Settings.LANGUAGE;
 import static com.example.a0102.Settings.PREFERENCES;
-import static com.example.a0102.Settings.SIZE;
 
-public class CheckProduct extends DialogFragment {
 
-    LinearLayout linearLayout;
+public class CheckProduct extends Fragment{
+
+
 
     //настройки
     SharedPreferences mSettings;
@@ -65,32 +57,33 @@ public class CheckProduct extends DialogFragment {
     ListView listView;
     String name;
     CheckProductAdapter adapter;
-    private ArrayList<CheckProductExample> spisok = new ArrayList<CheckProductExample>();
-    AlertDialog.Builder builder;
-
-
-    //методы необходимые для фрагмента
+    public ArrayList<CheckProductExample> spisok = new ArrayList<CheckProductExample>();
 
     public CheckProduct()
 
     {
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    @NonNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
-
-
-        builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.checkproduct, null);
-
+        view = inflater.inflate(R.layout.checkproduct, container, false);
+        view.setBackgroundColor(Color.parseColor("#1e1e1e"));
         dbHelper = new MYSQL(getContext());
-        builder.setView(view);
         ImageView imageView=view.findViewById(R.id.plus);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        ImageView imageView1=view.findViewById(R.id.back);
+        imageView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment frg = new Home();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.fragments, frg);
+                ft.commit();
+            }
+        });
+     imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
@@ -98,11 +91,12 @@ public class CheckProduct extends DialogFragment {
                 View view1= inflater1.inflate(R.layout.checkproductdialog,null);
                 builder1.setView(view1);
                 final EditText name = view1.findViewById(R.id.edittext);
+                final TextView text = view1.findViewById(R.id.textView7);
                 if (lan==0){
-                    builder1.setTitle("Введите имя продукта");
+                    text.setText("Введите имя продукта");
                 }
                 else{
-                    builder1.setTitle("Enter the title" );
+                    text.setText("Enter the title" );
                 }
                 builder1.setNegativeButton("NO",
                         new DialogInterface.OnClickListener() {
@@ -119,12 +113,20 @@ public class CheckProduct extends DialogFragment {
                                 cv.put("status",0);
                                 cv.put("name", name.getText().toString());
                                 db.insert("mytable1", null, cv);
-                                onDismiss(getDialog());
-                                DialogFragment dlg1=new CheckProduct();
-                                dlg1.show(getFragmentManager(), "dlg1");
+                                Fragment frg = new CheckProduct();
+                                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                                ft.replace(R.id.fragments, frg);
+                                ft.commit();
                             }
                         });
-                builder1.show();
+                AlertDialog dialog = builder1.create();
+                dialog.show();
+                dialog.setCancelable(false);
+                Button b = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+                b.setTextColor(getResources().getColor(R.color.bad));
+                Button b1 = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                b1.setTextColor(getResources().getColor(R.color.bad));
+
             }
         });
 
@@ -140,6 +142,7 @@ public class CheckProduct extends DialogFragment {
         }
         int height = size1.y;
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,(height/2));
+        lp.setMargins(0,height/5,0,0);
 
         //настройка
 
@@ -168,8 +171,8 @@ public class CheckProduct extends DialogFragment {
             while (c.moveToNext());
         }
         listView = view.findViewById(R.id.list);
-        DialogFragment dlg1=new CheckProduct();
-        adapter = new CheckProductAdapter(getContext(),spisok,size,dlg1);
+
+        adapter = new CheckProductAdapter(getContext(),spisok,size);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -180,24 +183,22 @@ public class CheckProduct extends DialogFragment {
         dbHelper.close();
         frameLayout.setLayoutParams(lp);
 
+
         if (n == 1) {
             textView = new TextView(getContext());
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             if (lan == 0) {
                 textView.setText("Пусто");
+
             } else {
                 textView.setText("Empty");
             }
+            textView.setTextColor(Color.parseColor("#ffffff"));
             textView.setGravity(Gravity.CENTER);
             frameLayout.addView(textView);
         }
 
-       return builder.create();
-    }
-
-    @Override
-    public void onDismiss(@NonNull DialogInterface dialog) {
-        super.onDismiss(dialog);
+       return view;
     }
 
 

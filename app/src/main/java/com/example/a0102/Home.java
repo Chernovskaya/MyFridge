@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -31,6 +33,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.ColorRes;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -150,8 +153,10 @@ public class Home extends Fragment{
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               DialogFragment dlg1=new CheckProduct();
-                dlg1.show(getFragmentManager(), "dlg1");
+                Fragment frg = new CheckProduct();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.fragments, frg);
+                ft.commit();
             }
         });
         layout=view.findViewById(R.id.fragments);
@@ -287,14 +292,12 @@ public class Home extends Fragment{
 
         //проверка на пустоту
         if (spisok.isEmpty()){
-            Display display =getActivity().getWindowManager().getDefaultDisplay();
-            final int width = display.getWidth();
             n=1;
             textView=new TextView(getContext());
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             if(lan==0) { textView.setText("Пусто"); }
             else{textView.setText("Empty");}
-
+                textView.setTextColor(Color.WHITE);
                 textView.setGravity(Gravity.CENTER);
                 frameLayout.addView(textView);
         }
@@ -470,7 +473,13 @@ public class Home extends Fragment{
                         adapter.notifyDataSetChanged();
                     }
                 });
-        builder.show();
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        Button b = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+        b.setTextColor(getResources().getColor(R.color.bad));
+        Button b1 = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        b1.setTextColor(getResources().getColor(R.color.bad));
 
     }
 

@@ -104,7 +104,7 @@ public class Add extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        view.setBackgroundColor(Color.parseColor("#3f8678"));
+        view.setBackgroundColor(Color.parseColor("#1e1e1e"));
         return view;
 
     }
