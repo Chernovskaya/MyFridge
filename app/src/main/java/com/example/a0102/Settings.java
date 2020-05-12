@@ -64,7 +64,7 @@ public class Settings extends Fragment {
             size = mSettings.getInt(SIZE, 0);
         }
         else{
-            size=30;
+            size=15;
         }
         if(mSettings.contains(LANGUAGE)) {
             lan = mSettings.getInt(LANGUAGE, 0);

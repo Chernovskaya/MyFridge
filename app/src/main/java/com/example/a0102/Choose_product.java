@@ -127,7 +127,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
             size = mSettings.getInt(SIZE, 0);
         }
         else{
-            size=30;
+            size=15;
         }
         mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         if(mSettings.contains(LANGUAGE)) {

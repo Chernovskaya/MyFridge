@@ -82,7 +82,7 @@ public class CheckProductAdapter extends BaseAdapter implements DialogInterface.
         if (mSettings.contains(SIZE)) {
             size = mSettings.getInt(SIZE, 0);
         } else {
-            size = 30;
+            size = 15;
         }
         dbHelper = new MYSQL(ctx);
         final CheckProductExample p = getProduct(position);

@@ -173,7 +173,7 @@ public class Home extends Fragment{
             size = mSettings.getInt(SIZE, 0);
         }
         else{
-            size=30;
+            size=15;
         }
 
         mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
@@ -308,7 +308,7 @@ public class Home extends Fragment{
             }
         }
         if (lan == 0) {search.setHint(names[146]);}else{search.setHint(names1[146]);}
-
+search.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {

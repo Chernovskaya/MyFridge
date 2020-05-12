@@ -56,7 +56,7 @@ public class Add extends ListFragment {
             size = mSettings.getInt(SIZE, 0);
         }
         else{
-            size=30;
+            size=15;
         }
 
         if(mSettings.contains(LANGUAGE)) {
