@@ -1,6 +1,5 @@
 package com.example.a0102;
 
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,16 +12,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import java.util.ArrayList;
 import static com.example.a0102.Settings.PREFERENCES;
 import static com.example.a0102.Settings.SIZE;
 
+/* 
+    Адаптер для списка покупок
+*/
 public class CheckProductAdapter extends BaseAdapter implements DialogInterface.OnDismissListener{
 
     //настройки
@@ -37,16 +37,12 @@ public class CheckProductAdapter extends BaseAdapter implements DialogInterface.
     DialogInterface dlg;
 
     @Override
-    public void onDismiss(DialogInterface dialogInterface) {
+    public void onDismiss(DialogInterface dialogInterface) {}
 
-    }
-
-
+// получение данных из класса
     CheckProductAdapter(Context context, ArrayList<CheckProductExample> products, int size1) {
-
         ctx = context;
         objects = products;
-
         size = size1;
         lInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -77,7 +73,7 @@ public class CheckProductAdapter extends BaseAdapter implements DialogInterface.
         if (view == null) {
             view = lInflater.inflate(R.layout.checkboxadapter, parent, false);
         }
-
+        //получение настроек
         mSettings = ctx.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         if (mSettings.contains(SIZE)) {
             size = mSettings.getInt(SIZE, 0);
@@ -93,8 +89,9 @@ public class CheckProductAdapter extends BaseAdapter implements DialogInterface.
         if(p.status.contains("1")){
             checkBox.setChecked(true);
         }
+        
+        //обработка нажатия на чекбокс и изменение статцса в БД
         checkBox.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                  db = dbHelper.getWritableDatabase();
@@ -117,6 +114,8 @@ public class CheckProductAdapter extends BaseAdapter implements DialogInterface.
                 }
             }
         });
+     
+    //удаление элемента списка по нажатию на изображение
     ImageView imageView = view.findViewById(R.id.rub);
     imageView.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -124,7 +123,7 @@ public class CheckProductAdapter extends BaseAdapter implements DialogInterface.
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             AppCompatActivity activity = (AppCompatActivity) view.getContext();
             db.delete("mytable1", "id = "+String.valueOf(p.id2),null);
-            Fragment frg = new CheckProduct();
+            Fragment frg = new CheckProduct();//обновление фрагмента
             FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragments, frg);
             ft.commit();
@@ -132,9 +131,6 @@ public class CheckProductAdapter extends BaseAdapter implements DialogInterface.
     });
         return view;
     }
-
-
-
 }
 
 
