@@ -32,7 +32,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.joda.time.DateTime;
@@ -48,14 +47,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-
 import static android.content.Context.ALARM_SERVICE;
 import static android.widget.Toast.LENGTH_SHORT;
 import static com.example.a0102.Settings.ALLALL;
 import static com.example.a0102.Settings.LANGUAGE;
 import static com.example.a0102.Settings.PREFERENCES;
 import static com.example.a0102.Settings.SIZE;
-
+/*
+    Фрагмент для добавления продукта в Home
+    переход во фрагмент для создания собственнго продукта
+*/
 public class Choose_product extends Fragment implements AdapterView.OnItemClickListener{
     ArrayList<ItemProduct> productss = new ArrayList<ItemProduct>();
     ArrayList<ItemProduct> sort = new ArrayList<ItemProduct>();
@@ -66,10 +67,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
 
     MYSQL dbHelper;
 
-
-
     Date currentDate;
-
     DateFormat dateFormat;
 
     int day;
@@ -110,6 +108,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
     int k=0;
     Boolean is=true;
 
+    //получение значения для отображения списка
     public Choose_product(int number) {
         this.number=number;
     }
@@ -119,8 +118,9 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
 
         View view = inflater.inflate(R.layout.add_product, container, false);
         view.setBackgroundColor(Color.parseColor("#1e1e1e"));
+        
         mInputSearch = view.findViewById(R.id.text2);
-
+        //получение настроек
         mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         editor = mSettings.edit();
         if(mSettings.contains(SIZE)) {
@@ -166,6 +166,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
         if(number==19){len1= 143;len2=145 ;}
             arrayname=new String[146];
         BufferedReader reader = null;
+        //чтение языка из файла
         try {
             reader = new BufferedReader(
                     new InputStreamReader(getActivity().getAssets().open(st), "UTF-8"));
@@ -217,36 +218,28 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
             days=new int[]{10,20};
             bitmaps = new Bitmap[arrayimage.length];
 
-        gcal = new GregorianCalendar();
+            gcal = new GregorianCalendar();
 
-        final ListView listView = view.findViewById(R.id.list);
-       frag2 = new CreateProduct();
-        frag1 = new Home();
+            final ListView listView = view.findViewById(R.id.list);
+            frag2 = new CreateProduct();
+            frag1 = new Home();
 
-
-
-
-
+        //Обработка на нажатие FloatingActionBar
         fab = view.findViewById(R.id.fab);
         fab.show();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dialog(add[0],add[1]);
-
-
+                Dialog(add[0],add[1]);//открытие диалогового окна
             }
         });
-
+        //создание и заполнение списка
         fillData();
         dbHelper=new MYSQL(getContext());
-
         adapter = new ObjectAdapter(getContext(), productss,size);
         listView.setAdapter(adapter);
 
-
-
-
+        //поиск продукта
         mInputSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
@@ -260,7 +253,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                         }
                     }
                 }
-                adapter = new ObjectAdapter(getContext(),sort,size);
+                adapter = new ObjectAdapter(getContext(),sort,size);//обновление списка
                 listView.setAdapter(adapter);
             }
             @Override
@@ -271,6 +264,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
             }
         });
         ////////////////////////////////////////////////////////////////////////
+        //обработка нажатия на элемент списка
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -284,7 +278,8 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
         return view;
     }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////заполнение списка////////////////////////////////
+   
     private void fillData() {
         for (int i = len1; i <len2+1 ; i++) {
             productss.add(new ItemProduct(arrayname[i], arrayimage[i],days[1],0,"",0));
@@ -297,10 +292,8 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) { }
+//диалоговое окно для перехода в режим создания собственного продукта
     private void Dialog(String title, String content) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -310,8 +303,6 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
-
-
                     }
                 });
         builder.setPositiveButton("OK",
@@ -325,7 +316,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                         fTrans.commit();
                     }
                 });
-
+        //создание AlertDialog для изменения дизайна кнопки
         AlertDialog dialog = builder.create();
         dialog.show();
         dialog.setCancelable(false);
@@ -334,6 +325,8 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
         Button b1 = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
         b1.setTextColor(getResources().getColor(R.color.bad));
     }
+    
+    //диалоговое окно для добавление продукта в свой "холодильник"
     private void Dialog2(final int g1) {
         currentDate = new Date();
         dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
@@ -367,7 +360,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                 month = cldr.get(Calendar.MONTH);
                 year = cldr.get(Calendar.YEAR);
                 days1=0;
-
+                //изменение даты производства
                 picker = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -425,7 +418,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                         } else {
                                 c1.add(Calendar.DATE, day1*umnoj);
                                 SQLiteDatabase db = dbHelper.getWritableDatabase();
-
+                                //добавление продукта в БД
                                 Cursor c = db.query("mytable", null, null, null, null, null, null);
                                 ContentValues cv = new ContentValues();
                                 cv.put("email", day1*umnoj);
@@ -436,9 +429,9 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                                 cv.put("month", c1.get(Calendar.MONTH)+"");
                                 cv.put("year", c1.get(Calendar.YEAR)+"");
                                 db.insert("mytable", null, cv);
-                                int update=mSettings.getInt(ALLALL,0)+1;
-                                 editor.putInt(ALLALL, update);
-                                 editor.apply();
+                                int update=mSettings.getInt(ALLALL,0)+1;//изменение общей статистики продуктов
+                                editor.putInt(ALLALL, update);
+                                editor.apply();
 
                             if (c != null && c.moveToFirst()) {
                                 do{
@@ -447,7 +440,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
                             }
                                 dbHelper.close();
 
-
+                            //создание будильника для уведомления
                             Intent intent = new Intent(getContext(), AlarmBroadcast.class);
                             if (lan==0){
                                 intent.putExtra("title","Напоминание");
@@ -480,7 +473,7 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
 
 
     }
-
+//диалоговое окно для выбора срока годности(в днях или в месяцах)
 private void Dialog3(final TextView dayofmonth1){
     final String[] array = {add[10],add[11]};
     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
