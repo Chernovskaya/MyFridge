@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 
+/*
+    Адаптер для списка "категориии продутов"
+*/
 public class MyAdapter extends BaseAdapter {
     
     Context ctx;
