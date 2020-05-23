@@ -32,38 +32,37 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import java.util.ArrayList;
 import static com.example.a0102.Settings.LANGUAGE;
 import static com.example.a0102.Settings.PREFERENCES;
-
+/*
+    Фрагмент для просмотра списка покупок
+*/
 
 public class CheckProduct extends Fragment{
-
-
-
+    
     //настройки
     SharedPreferences mSettings;
     int size;
     //БД
     MYSQL dbHelper;
     View view;
+    SQLiteDatabase db;
+   
+    //настройка
     int n = 1;
     int lan;
     String status;
     TextView textView;
-    SQLiteDatabase db;
+    
     String id1;
     ListView listView;
+    
     String name;
     CheckProductAdapter adapter;
     public ArrayList<CheckProductExample> spisok = new ArrayList<CheckProductExample>();
 
-    public CheckProduct()
-
-    {
-    }
-
+    public CheckProduct(){}
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -71,9 +70,11 @@ public class CheckProduct extends Fragment{
 
         view = inflater.inflate(R.layout.checkproduct, container, false);
         view.setBackgroundColor(Color.parseColor("#1e1e1e"));
+        
         dbHelper = new MYSQL(getContext());
+        //создание нового элемента
         ImageView imageView=view.findViewById(R.id.plus);
-     imageView.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
@@ -109,6 +110,7 @@ public class CheckProduct extends Fragment{
                                 ft.commit();
                             }
                         });
+                //создание AlertDialog для изменения дизайна кнопки
                 AlertDialog dialog = builder1.create();
                 dialog.show();
                 dialog.setCancelable(false);
@@ -123,6 +125,8 @@ public class CheckProduct extends Fragment{
         FrameLayout frameLayout= view.findViewById(R.id.f);
         textView = view.findViewById(R.id.text);
         dbHelper = new MYSQL(getContext());
+        
+        //получение размера экрана устройства
         Display display1 = getActivity().getWindowManager().getDefaultDisplay();
         Point size1 = new Point();
         try {
@@ -135,7 +139,6 @@ public class CheckProduct extends Fragment{
         lp.setMargins(0,height/5,0,0);
 
         //настройка
-
         mSettings = getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         if (mSettings.contains(LANGUAGE)) {
             lan = mSettings.getInt(LANGUAGE, 0);
@@ -147,7 +150,6 @@ public class CheckProduct extends Fragment{
         } else {
             textView.setText("Grocery list");
         }
-
         db = dbHelper.getWritableDatabase();
         Cursor c = db.query("mytable1",null, null, null, null, null, null);
         if (c != null && c.moveToFirst()) {
@@ -160,20 +162,14 @@ public class CheckProduct extends Fragment{
             }
             while (c.moveToNext());
         }
+        //создание списка
         listView = view.findViewById(R.id.list);
-
         adapter = new CheckProductAdapter(getContext(),spisok,size);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getContext(),"dhtrfrt",Toast.LENGTH_SHORT).show();
-            }
-        });
         dbHelper.close();
         frameLayout.setLayoutParams(lp);
 
-
+//проверка на пустоту
         if (n == 1) {
             textView = new TextView(getContext());
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
@@ -187,22 +183,10 @@ public class CheckProduct extends Fragment{
             textView.setGravity(Gravity.CENTER);
             frameLayout.addView(textView);
         }
-
        return view;
     }
 
 
 }
 
-/*
-<style name="CheckBox" parent="Theme.AppCompat.Light">
-<item name="colorControlNormal">
-@android:color/colorrr
-</item>
 
-<item name="colorControlActivated">
-@android:color/colorrr
-</item>
-</style>
-
-*/
