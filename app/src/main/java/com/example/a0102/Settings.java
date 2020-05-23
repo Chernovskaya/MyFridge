@@ -16,21 +16,20 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-
+/* 
+    Фрагмент предназначен для выбора и создания настроек
+*/
 public class Settings extends Fragment {
     public static final String PREFERENCES = "mysettings";
     public static final String SIZE = "size";
     public static final String LANGUAGE = "language";
     public static final String ALLALL= "allall";
     public static final String GOBAD= "gobad";
-
 
 
     int s = 30;
@@ -79,6 +78,7 @@ public class Settings extends Fragment {
             st="ppa.txt";
         }
         BufferedReader reader = null;
+        //чтение языка с файла
         try {
             reader = new BufferedReader(
                     new InputStreamReader(getActivity().getAssets().open(st), "UTF-8"));
@@ -129,12 +129,14 @@ public class Settings extends Fragment {
         language.setText(names[2]);
         sizetext.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
         language.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
+        //изменение языка
         language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog1(languages,names[5],names[6],1);
             }
         });
+        //изменение размера шрифта
         sizetext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -219,9 +221,7 @@ public class Settings extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         Intent i = new Intent(getContext(), Instruction.class);
-                        startActivity(i);
-
-
+                        startActivity(i);//просмотр инструкции еще раз
                     }
                 })
                 .setNegativeButton(names[9], new DialogInterface.OnClickListener() {
