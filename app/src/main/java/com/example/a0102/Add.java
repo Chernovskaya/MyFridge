@@ -18,7 +18,9 @@ import java.util.ArrayList;
 import static com.example.a0102.Settings.LANGUAGE;
 import static com.example.a0102.Settings.PREFERENCES;
 import static com.example.a0102.Settings.SIZE;
-
+/* 
+    Фрагмент для отображения категорий продуктов, переход к этим категориям
+*/
 public class Add extends ListFragment {
 
     //настройки
@@ -97,12 +99,14 @@ public class Add extends ListFragment {
                 }
             }
         }
+         //заполнение списка
         fillData();
         adapter = new MyAdapter(getContext(),products,size);
         setListAdapter(adapter);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        
         View view = super.onCreateView(inflater, container, savedInstanceState);
         view.setBackgroundColor(Color.parseColor("#1e1e1e"));
         return view;
@@ -117,7 +121,7 @@ public class Add extends ListFragment {
     }
 
 
- //обработка нажатия на элемент списка
+ //обработка нажатия на элемент списка, переход в новый фрагмент
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
