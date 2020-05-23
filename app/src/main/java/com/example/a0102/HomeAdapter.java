@@ -1,6 +1,5 @@
 package com.example.a0102;
 
-
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
@@ -24,7 +23,7 @@ import lecho.lib.hellocharts.listener.PieChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.SliceValue;
 import lecho.lib.hellocharts.view.PieChartView;
-
+//Адаптер для списка продуктов в "холодильнике"
 public class HomeAdapter extends BaseAdapter {
 
     //настройки
@@ -72,23 +71,19 @@ public class HomeAdapter extends BaseAdapter {
         TextView r=view.findViewById(R.id.text);
         r.setText(p.name1);
         r.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
-
-
         PieChartView pieChartView = view.findViewById(R.id.chart);
-
         List<SliceValue> pie = new ArrayList<>();
 
-
+        //создание мини диаграммы для визуального отображения просроченных продуктов
             pie.add(new SliceValue(p.days-(p.days-p.days1),Color.parseColor("#ed6b02")));
             pie.add(new SliceValue(p.days-p.days1, Color.parseColor("#A39B9B")));
-
 
         PieChartData pieChartData = new PieChartData(pie);
         pieChartData.setHasCenterCircle(true).setCenterText1("");
         pieChartData.setHasLabels(true).setValueLabelTextSize(14);
         pieChartView.setPieChartData(pieChartData);
         ImageView imageView=view.findViewById(R.id.image);
-
+        //если картинка берется из папки
        if(p.image1==666){
            try {
                ContextWrapper cw = new ContextWrapper(ctx);
@@ -102,6 +97,7 @@ public class HomeAdapter extends BaseAdapter {
                e.printStackTrace();
            }
        }
+       
        else{
            imageView.setImageResource(p.image1);
        }
