@@ -1,5 +1,7 @@
 package com.example.a0102;
-
+/*
+    Элемент списка в списке продуктов
+*/
 public class CheckProductExample {
     String name2;
     String status;
