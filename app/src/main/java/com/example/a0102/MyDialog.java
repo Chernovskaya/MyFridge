@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -25,10 +24,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import static com.example.a0102.Settings.LANGUAGE;
 import static com.example.a0102.Settings.PREFERENCES;
-
+/* 
+    Диалоговое окно для просмотра информации о продукте
+*/
 public class MyDialog extends DialogFragment  {
     private String name;
     private String dayc;
@@ -149,10 +149,7 @@ public class MyDialog extends DialogFragment  {
         builder.setView(v);
         return builder.create();
     }
-
-
-
-
+//получение данных из класса
     public MyDialog(String name,int day,String dayc,String monthc,String yearc, String image,int days){
         this.name=name;
         this.dayc=dayc;
