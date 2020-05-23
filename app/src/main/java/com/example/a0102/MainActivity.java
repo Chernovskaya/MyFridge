@@ -10,13 +10,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
 
     public BottomNavigationView navigation;
+  //обработка нажатия на элемент нижнего меню
   public BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+//метод для открытия фрагмента
     public void loadFragment(Fragment fragment,int n) {
         FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
         fr.replace(R.id.fragments, fragment).commit();
