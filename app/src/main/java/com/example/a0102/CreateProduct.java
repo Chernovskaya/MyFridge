@@ -1,6 +1,5 @@
 package com.example.a0102;
 
-
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -54,6 +53,7 @@ import static com.example.a0102.Settings.LANGUAGE;
 import static com.example.a0102.Settings.PREFERENCES;
 
 public class CreateProduct extends Fragment {
+    
     ImageView image;
     Button button;
     EditText name;
@@ -90,17 +90,16 @@ public class CreateProduct extends Fragment {
     int k=0;
     int i=0;
     String [] names = new String [12];
-
+    
     BufferedReader reader = null;
-
     String mLine;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        //получение настроек
         mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
-     editor = mSettings.edit();
+        editor = mSettings.edit();
         if(mSettings.contains(LANGUAGE)) {
             lan = mSettings.getInt(LANGUAGE, 0);
         }
@@ -113,13 +112,7 @@ public class CreateProduct extends Fragment {
         else{
             st="ppa.txt";
         }
-
-
-
-
-
-
-
+       //чтение языка из файла
         reader = null;
         try {
             reader = new BufferedReader(
@@ -173,6 +166,8 @@ public class CreateProduct extends Fragment {
         c1 = Calendar.getInstance();
         cldr = Calendar.getInstance();
         name3="146";
+        
+        //выбор даты производства
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,6 +199,8 @@ public class CreateProduct extends Fragment {
                 picker.show();
             }
         });
+        
+        //добавление продукта в свой список
         button.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -233,8 +230,6 @@ public class CreateProduct extends Fragment {
                                 Cursor c = db.query("mytable", null, null, null, null, null, null);
 
                                 ContentValues cv = new ContentValues();
-
-
                                 cv.put("email", day1*umnoj);
                                 cv.put("name", name.getText().toString());
                                 cv.put("image",name3+"r");
@@ -277,6 +272,7 @@ public class CreateProduct extends Fragment {
             }
         });
 
+        //загрузка картинки из галереи
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -287,13 +283,8 @@ public class CreateProduct extends Fragment {
         });
 
         return view;
-
-
-
-
-
-
     }
+    //загрузка изображения
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
@@ -320,7 +311,7 @@ public class CreateProduct extends Fragment {
                 }
         }
     }
-
+//выбор счета срока годности(дни/месяцы)
     public void Dialog3(final TextView dayofmonth1){
         final String[] array = {names[3],names[9]};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -361,7 +352,7 @@ public class CreateProduct extends Fragment {
         builder.show();
         return;
     }
-
+//сохранение и копирование картинки
     private String saveToInternalStorage(Bitmap bitmapImage){
         ContextWrapper cw = new ContextWrapper(getContext());
         File directory = cw.getDir(name3+"r", Context.MODE_PRIVATE);
