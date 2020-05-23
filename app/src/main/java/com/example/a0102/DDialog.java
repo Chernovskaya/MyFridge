@@ -1,6 +1,5 @@
 package com.example.a0102;
 
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -22,11 +20,14 @@ import java.util.List;
 import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.SliceValue;
 import lecho.lib.hellocharts.view.PieChartView;
-
 import static com.example.a0102.Settings.ALLALL;
 import static com.example.a0102.Settings.GOBAD;
 import static com.example.a0102.Settings.PREFERENCES;
 
+/*
+    Диалоговое окно для отображения статистики(общее количество изменяется при добавлении продукта в свой "холодильник",
+    количество испорченных - во фрагменте Home при заполнение списка)
+*/
 
 public class DDialog extends DialogFragment {
     SharedPreferences mSettings;
@@ -43,9 +44,11 @@ public class DDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        //получение настроек
             mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
             int gobad= mSettings.getInt(GOBAD, 0);
             int allall = mSettings.getInt(ALLALL, 0)-gobad;
+        
             LayoutInflater inflater = getActivity().getLayoutInflater();
             View v = inflater.inflate(R.layout.diagramma, null);
             builder.setView(v);
@@ -65,7 +68,6 @@ public class DDialog extends DialogFragment {
         params.height = 2*height/3;
         linearLayout.setLayoutParams(params);
 
-
             if(gobad==0){
                 pie.add(new SliceValue(100,Color.parseColor("#98e867")));
             }
@@ -73,20 +75,11 @@ public class DDialog extends DialogFragment {
                 pie.add(new SliceValue(allall,Color.parseColor("#98e867")));
                 pie.add(new SliceValue(gobad, Color.parseColor("#f0ad2a")));
             }
-
+            //создание диаграммы
             PieChartData pieChartData = new PieChartData(pie);
             pieChartData.setHasCenterCircle(true).setCenterText1(total).setCenterText1Color(Color.parseColor("#ffffff"));
             pieChartData.setHasLabels(true).setValueLabelTextSize(14);
             pieChartView.setPieChartData(pieChartData);
-
-
-
-
-
-
-
-
-
         return builder.create();
     }
 
