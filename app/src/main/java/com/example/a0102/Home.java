@@ -32,7 +32,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.ColorRes;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -61,7 +60,10 @@ import static com.example.a0102.Settings.LANGUAGE;
 import static com.example.a0102.Settings.PREFERENCES;
 import static com.example.a0102.Settings.SIZE;
 
-
+/* 
+    Основной фрагмент, который предназначен для отображения выбранных продуктов, 
+    переход во фрагмент для создания списка покупок.
+*/
 public class Home extends Fragment{
 
     FrameLayout layout;
@@ -149,6 +151,7 @@ public class Home extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.home, container, false);
+        //переход в режим просмотра списка покупок
         ImageView imageView=view.findViewById(R.id.note);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +162,7 @@ public class Home extends Fragment{
                 ft.commit();
             }
         });
+        
         layout=view.findViewById(R.id.fragments);
         frameLayout=view.findViewById(R.id.fragmentsss);
         mRootFrameLayout =view.findViewById(R.id.kuku);
@@ -167,7 +171,7 @@ public class Home extends Fragment{
         dbHelper = new MYSQL(getContext());
 
 
-        //настройка
+        //получение настроек
         mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         if(mSettings.contains(SIZE)) {
             size = mSettings.getInt(SIZE, 0);
@@ -184,6 +188,7 @@ public class Home extends Fragment{
             lan=0;
         }
          reader = null;
+        // чтение русского языка из файла
         try {
             reader = new BufferedReader(
                     new InputStreamReader(getActivity().getAssets().open("pp.txt"), "UTF-8"));
@@ -210,7 +215,7 @@ public class Home extends Fragment{
         k=0;
 
 
-        //чтение языка из файла
+        //чтение английского языка из файла
         try {
             reader = new BufferedReader(
                     new InputStreamReader(getActivity().getAssets().open("ppa.txt"), "UTF-8"));
@@ -241,14 +246,13 @@ public class Home extends Fragment{
 
         search=view.findViewById(R.id.search);
 
-        //всякие списки адпаптеры
+        //списки,адпаптеры
         fillData(view);
         Collections.sort(spisok, ItemProduct.COMPARE);
 
 
-
+        //проверка на наличие испорченных продуктов
         if (is){
-
             TextView textView=new TextView(getContext());
             textView.setBackgroundResource(R.drawable.shape2);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,25);
@@ -267,6 +271,7 @@ public class Home extends Fragment{
             mRootFrameLayout.addView(linearLayout);
 
         }
+        //создание основного списка,адаптера
         listView = view.findViewById(R.id.listView2);
         adapter = new HomeAdapter(getContext(),spisok,size);
         listView.setAdapter(adapter);
@@ -274,7 +279,7 @@ public class Home extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 int opaa = spisok.get(i).getId();
-                Info(opaa);
+                Info(opaa);//метод для открытия диалогового окна - информация о продукте
             }
         });
 
@@ -284,7 +289,7 @@ public class Home extends Fragment{
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                int opaa = spisok.get(position).getId();
-               Dialog(opaa,view);
+               Dialog(opaa,view);//удаление из бд
                return true;
             }
         });
@@ -308,7 +313,9 @@ public class Home extends Fragment{
             }
         }
         if (lan == 0) {search.setHint(names[146]);}else{search.setHint(names1[146]);}
-search.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
+        
+        //поиск продукта в списке
+        search.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
@@ -346,11 +353,11 @@ search.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
                 cal=Calendar.getInstance();
                 dayc=c.getString(c.getColumnIndexOrThrow("day"));
                 monthc=c.getString(c.getColumnIndexOrThrow("month"));
-               yearc=c.getString(c.getColumnIndexOrThrow("year"));
+                yearc=c.getString(c.getColumnIndexOrThrow("year"));
                 name = c.getString(c.getColumnIndexOrThrow("name"));
                 day = Integer.valueOf(c.getString(c.getColumnIndexOrThrow("email")));
                 int id=Integer.valueOf(c.getString(c.getColumnIndexOrThrow("id")));
-               image = c.getString(c.getColumnIndexOrThrow("image"));
+                image = c.getString(c.getColumnIndexOrThrow("image"));
                 bool=c.getString(c.getColumnIndexOrThrow("gobad"));
                 for (int i = 0; i <names.length ; i++) {
                     if(name.contains(names[i])){
@@ -375,6 +382,7 @@ search.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
                 int two_m=Integer.parseInt(cal.get(Calendar.MONTH)+"");
                 int one_y=Integer.parseInt(yearc);
                 int two_y=Integer.parseInt(cal.get(Calendar.YEAR)+"");
+                //если не истек срок годности продукта
                  if ((one_y==two_y && ( (one_m==two_m && one_d>two_d) || (one_m>two_m)))  || (one_y>two_y)    ) {
                      Calendar c3 = Calendar.getInstance();
                      c3.set(Calendar.MONTH, Integer.parseInt(monthc));
@@ -399,6 +407,7 @@ search.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
                          }
                      }
                  }
+                //если истек срок годности продукта
                  else{
                      is=false;
                      ContentValues values = new ContentValues();
@@ -455,25 +464,18 @@ search.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
                         db.delete("mytable", "id = "+String.valueOf(opa),null);
                         dbHelper.close();
 
-                        //создание будильника
-                        Intent myIntent = new Intent(getContext(),
-                                AlarmBroadcast.class);
-
-                        PendingIntent pendingIntent
-                                = PendingIntent.getBroadcast(getContext(),
-                                opa, myIntent, 0);
-
-                        AlarmManager alarmManager
-                                = (AlarmManager)getActivity().getSystemService(ALARM_SERVICE);
-
+                        //создание будильника для оповещения
+                        Intent myIntent = new Intent(getContext(),AlarmBroadcast.class);
+                        PendingIntent pendingIntent=PendingIntent.getBroadcast(getContext(),opa, myIntent, 0);
+                        AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(ALARM_SERVICE);
                         alarmManager.cancel(pendingIntent);
 
-
+                        //обновление списка
                         fillData(view3);
                         adapter.notifyDataSetChanged();
                     }
                 });
-
+        //использование AlertDialog для изменения дизайна кнопки
         AlertDialog dialog = builder.create();
         dialog.show();
         Button b = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
@@ -483,7 +485,7 @@ search.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
 
     }
 
-//программное создание layout просрочки
+//программное создание layout просроченных продуктов
 void creating(final View view1,final int id, String foruri){
     //корневая среда
     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -534,7 +536,7 @@ void creating(final View view1,final int id, String foruri){
 
     }
 
-    //нажатие на элемента списка
+    //нажатие на элемента списка для получения информации о продукте
     private void Info (final int opa) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor c = db.query("mytable", null, null, null, null, null, null);
@@ -579,10 +581,10 @@ void creating(final View view1,final int id, String foruri){
         c2.set(Calendar.DATE, gcal.get(Calendar.DAY_OF_MONTH));
         c2.set(Calendar.YEAR, gcal.get(Calendar.YEAR));
         Date two= c2.getTime();
-        days = Days.daysBetween(new DateTime(two), new DateTime(dateOne)).getDays();
+        days = Days.daysBetween(new DateTime(two), new DateTime(dateOne)).getDays();//рассчет оставшихся дней
 
-       dlg = new MyDialog(name,day,dayc,monthc,yearc,image,days);
-       dlg.show(getFragmentManager(), "dlg");
+        dlg = new MyDialog(name,day,dayc,monthc,yearc,image,days);//диалоговое окно с информацией о продукте
+        dlg.show(getFragmentManager(), "dlg");
 
     }
 
