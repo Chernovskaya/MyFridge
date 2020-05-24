@@ -14,9 +14,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
@@ -33,6 +35,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.ColorRes;
+import androidx.annotation.RequiresApi;
+import androidx.core.widget.TextViewCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -147,12 +151,17 @@ public class Home extends Fragment{
     LinearLayout mRootFrameLayout;
     EditText search;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.home, container, false);
         //переход в режим просмотра списка покупок
         ImageView imageView=view.findViewById(R.id.note);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int widht= displayMetrics.widthPixels;
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,10 +171,21 @@ public class Home extends Fragment{
                 ft.commit();
             }
         });
-        
-        layout=view.findViewById(R.id.fragments);
+        //программное создание разметки
+        LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int)(height/12));
+        layout=view.findViewById(R.id.nos);
+        layout.setLayoutParams(lp1);
+
+        LinearLayout frameLayoutpanel=view.findViewById(R.id.panel);
+        FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        FrameLayout.LayoutParams lp4 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,height/15);
+        lp4.setMargins(widht/30,0,widht/30,0);
+        frameLayoutpanel.setLayoutParams(lp4);
+        lp2.setMargins(widht/30,height/20,widht/30,height/40);
         frameLayout=view.findViewById(R.id.fragmentsss);
+        frameLayout.setLayoutParams(lp2);
         mRootFrameLayout =view.findViewById(R.id.kuku);
+
 
         //содзание для БД
         dbHelper = new MYSQL(getContext());
@@ -173,13 +193,7 @@ public class Home extends Fragment{
 
         //получение настроек
         mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
-        if(mSettings.contains(SIZE)) {
-            size = mSettings.getInt(SIZE, 0);
-        }
-        else{
-            size=15;
-        }
-
+        size = mSettings.getInt(SIZE, 0);
         mSettings= getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         if(mSettings.contains(LANGUAGE)) {
             lan = mSettings.getInt(LANGUAGE, 0);
@@ -241,7 +255,7 @@ public class Home extends Fragment{
 
         //прогрманное создание даты
         TextView main = view.findViewById(R.id.data);
-        main.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
+        main.setTextSize(height/50);
         main.setText(dateText+" ");
 
         search=view.findViewById(R.id.search);
@@ -255,7 +269,7 @@ public class Home extends Fragment{
         if (is){
             TextView textView=new TextView(getContext());
             textView.setBackgroundResource(R.drawable.shape2);
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,25);
+
             if(lan==0){
                 textView.setText("Нет испорченных продуктов");
             }
@@ -263,13 +277,12 @@ public class Home extends Fragment{
                 textView.setText("No spoiled foods");
             }
             textView.setPadding(10,5,10,5);
-            LinearLayout linearLayout = new LinearLayout(getContext());
-            linearLayout.setOrientation(LinearLayout.VERTICAL);
-            linearLayout.setPadding(0,30,0,0);
-            linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            linearLayout.addView(textView);
-            mRootFrameLayout.addView(linearLayout);
-
+           FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+            lp.gravity = Gravity.CENTER_VERTICAL;
+            textView.setLayoutParams(lp);
+            int width = displayMetrics.widthPixels/40;
+            textView.setTextSize(width);
+            layout.addView(textView);
         }
         //создание основного списка,адаптера
         listView = view.findViewById(R.id.listView2);
@@ -315,7 +328,7 @@ public class Home extends Fragment{
         if (lan == 0) {search.setHint(names[146]);}else{search.setHint(names1[146]);}
         
         //поиск продукта в списке
-        search.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
+        search.setTextSize(height/50);
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {

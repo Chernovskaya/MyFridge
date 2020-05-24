@@ -6,12 +6,12 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:padding="15dp"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         style="@style/CustomListView"
         android:layout_width="match_parent"
-        android:layout_height="218dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/shape"
         android:orientation="horizontal">
         <ImageView

@@ -2,13 +2,19 @@ package com.example.a0102;
 
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 
 public class ObjectAdapter extends BaseAdapter {
@@ -59,9 +65,16 @@ public class ObjectAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        AppCompatActivity activity = (AppCompatActivity)ctx;
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        final int widht = displayMetrics.widthPixels;
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(widht/3,widht/3);
+
         final ItemProduct p = getProduct(position);
 
         viewHolder.imageView.setImageResource(p.image1);
+        viewHolder.imageView.setLayoutParams(lp);
         viewHolder.nameView.setText(p.name1);
         viewHolder.nameView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, size);
         viewHolder.dayView.setText(p.days + " ");

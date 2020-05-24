@@ -5,13 +5,17 @@ import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import java.io.File;
 import java.io.FileInputStream;
@@ -66,6 +70,11 @@ public class HomeAdapter extends BaseAdapter {
             view = lInflater.inflate(R.layout.list_item2, parent, false);
 
         }
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        AppCompatActivity activity = (AppCompatActivity)ctx;
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        final int widht = displayMetrics.widthPixels;
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(widht/3,widht/3);
         final ItemProduct p = getProduct(position);
 
         TextView r=view.findViewById(R.id.text);
@@ -83,6 +92,7 @@ public class HomeAdapter extends BaseAdapter {
         pieChartData.setHasLabels(true).setValueLabelTextSize(14);
         pieChartView.setPieChartData(pieChartData);
         ImageView imageView=view.findViewById(R.id.image);
+        imageView.setLayoutParams(lp);
         //если картинка берется из папки
        if(p.image1==666){
            try {

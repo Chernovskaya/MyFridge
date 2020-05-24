@@ -4,7 +4,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
 
@@ -14,6 +14,7 @@
             android:orientation="horizontal">
 
             <FrameLayout
+                android:id="@+id/imag"
                 android:layout_width="207dp"
                 android:layout_height="206dp"
                 android:padding="5dp"
@@ -30,9 +31,10 @@
 
             <TextView
                 android:id="@+id/text"
+                android:layout_gravity="center"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
-                android:layout_height="206dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:textColor="#CEC5C5"
                 android:gravity="center"

@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 
 import static com.example.a0102.Settings.ALLALL;
 import static com.example.a0102.Settings.GOBAD;
+import static com.example.a0102.Settings.SIZE;
 
 
 public class SplashZastavka extends Activity {
@@ -21,6 +23,9 @@ public class SplashZastavka extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        final int height = displayMetrics.heightPixels;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
         mSettings = this.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
@@ -35,6 +40,7 @@ public class SplashZastavka extends Activity {
                     finish();
                 }
                 else{
+                    editor.putInt(SIZE, height/60);
                     Intent i = new Intent(SplashZastavka.this, Instruction.class);
                     startActivity(i);
                     finish();

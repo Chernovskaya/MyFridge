@@ -36,16 +36,18 @@
 
         <EditText
             android:id="@+id/textdays"
-            android:layout_width="232dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="number"
             android:textSize="20dp"
+            android:layout_weight="1"
             android:theme="@style/Theme.App.Base"
             android:text="" />
         <TextView
             android:layout_width="match_parent"
             android:gravity="center"
             android:textSize="20dp"
+            android:layout_weight="2"
             android:id="@+id/dayormonth"
             android:layout_height="match_parent"/>
 

@@ -222,5 +222,5 @@ Statistics
 Total
 Spoiled
 Eaten up(will be eaten)
-
+Application info
 search

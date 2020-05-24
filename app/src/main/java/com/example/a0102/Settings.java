@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ public class Settings extends Fragment {
     int d=30;
     TextView sizetext;
     TextView language;
+    int height;
     TextView how;
     TextView stat;
     SharedPreferences mSettings;
@@ -43,7 +45,7 @@ public class Settings extends Fragment {
     int size;
     String st;
     int lan;
-    String [] names=new String[16];
+    String [] names=new String[17];
     int k=0;
     int i=0;
 
@@ -55,6 +57,9 @@ public class Settings extends Fragment {
         final String[] sizes = {"15", "20", "30"};
 
         View view = inflater.inflate(R.layout.settings, container, false);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        height = displayMetrics.heightPixels;
         mSettings = getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         editor = mSettings.edit();
 
@@ -85,7 +90,7 @@ public class Settings extends Fragment {
             String mLine;
             while ((mLine = reader.readLine())!= null) {
                 k=k+1;
-                if ((k>=221 && k<=224)||(k<=207 && k>=196)) {
+                if ((k>=221 && k<=225)||(k<=207 && k>=196)) {
                     names[i] = mLine.replace(",", "");
                     i += 1;
                 }
@@ -102,12 +107,22 @@ public class Settings extends Fragment {
             }
         }
         TextView textView=view.findViewById(R.id.set);
+        TextView textView1=view.findViewById(R.id.info);
+        textView1.setText(names[16]);
+        textView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IDialog dlg = new IDialog();
+                dlg.show(getFragmentManager(), "ddlg");
+            }
+        });
         textView.setText(names[0]);
         final String[] languages = {names[3],names[4]};
         sizetext = view.findViewById(R.id.sizetext);
         stat = view.findViewById(R.id.stat);
         stat.setText(names[12]);
         stat.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
+        textView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP,size);
         stat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,7 +175,18 @@ public class Settings extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog,
                                                 int item) {
-                                if(id1==0){ d = Integer.parseInt(opa[item]);}
+                                if(id1==0){
+                                    if (item==0){
+                                        d=height/80;
+                                    }
+                                    if (item==1){
+                                        d=height/60;
+                                    }
+                                    if (item==2){
+                                        d=height/40;
+
+                                    }
+                                }
                                 if(id1==1){st=opa[item];}
                                 //Toast.makeText(getActivity(), mess + opa[item], LENGTH_SHORT).show();
                                 }

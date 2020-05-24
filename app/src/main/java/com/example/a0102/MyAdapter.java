@@ -2,13 +2,19 @@ package com.example.a0102;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 
 /*
@@ -53,7 +59,13 @@ public class MyAdapter extends BaseAdapter {
         if (view == null) {
             view = lInflater.inflate(R.layout.list_item, parent, false);
         }
-
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        AppCompatActivity activity = (AppCompatActivity) view.getContext();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        final int widht = displayMetrics.widthPixels;
+        FrameLayout frameLayout = view.findViewById(R.id.imag);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(widht/3,widht/3);
+        frameLayout.setLayoutParams(lp);
         Product p = getProduct(position);
 
         TextView r=view.findViewById(R.id.text);
