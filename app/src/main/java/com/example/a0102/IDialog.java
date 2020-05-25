@@ -41,7 +41,7 @@ public class IDialog extends DialogFragment {
         linearLayout=v.findViewById(R.id.dia);
         LinearLayout.LayoutParams lp = new  LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT,2*height/3 );
         linearLayout.setLayoutParams(lp);
-        textView.setTextSize(height/40);
+        textView.setTextSize(height/80);
         if(lan==0){
             textView.setText("  Основной задачей приложения «MyFridge» является отслеживание срока годности продуктов в вашем холодильнике. \n" +
                     "   В разделе «+» можно добавить предложенный товар, изменив дату производства и срок годности продукта. Если в предложенном списке не оказалось нужного товара, можно создать самому, введя необходимые данные. После истечения срока годности Вам на телефон придет уведомление.\n" +

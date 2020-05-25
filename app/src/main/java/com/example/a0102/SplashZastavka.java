@@ -7,6 +7,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import static com.example.a0102.Settings.ALLALL;
 import static com.example.a0102.Settings.GOBAD;
@@ -26,8 +29,17 @@ public class SplashZastavka extends Activity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         final int height = displayMetrics.heightPixels;
+        final int widht = displayMetrics.widthPixels;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
+        LinearLayout.LayoutParams lp = new  LinearLayout.LayoutParams( widht/5,widht/5 );
+        lp.setMargins(0,widht/5,0,0);
+        ImageView imageView = findViewById(R.id.image);
+        imageView.setLayoutParams(lp);
+        TextView textView = findViewById(R.id.name);
+        textView.setTextSize(height/60);
+
+
         mSettings = this.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         editor = mSettings.edit();
         new Handler().postDelayed(new Runnable() {
@@ -49,10 +61,6 @@ public class SplashZastavka extends Activity {
                     editor.putInt(GOBAD, 0);
                     editor.apply();
                 }
-
-
-
-
             }
         }, SPLASH_TIME_OUT);
     }

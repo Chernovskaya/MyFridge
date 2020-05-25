@@ -151,6 +151,8 @@ public class Home extends Fragment{
     LinearLayout mRootFrameLayout;
     EditText search;
 
+     int height;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -160,7 +162,7 @@ public class Home extends Fragment{
         ImageView imageView=view.findViewById(R.id.note);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
+        height = displayMetrics.heightPixels;
         int widht= displayMetrics.widthPixels;
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -502,8 +504,8 @@ public class Home extends Fragment{
 void creating(final View view1,final int id, String foruri){
     //корневая среда
     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-    params.width=120;
-    params.height=101;
+    params.width=height/12;
+    params.height=height/12;
 
     //объект
     LinearLayout linearLayout = new LinearLayout(getContext());
