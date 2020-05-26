@@ -77,21 +77,19 @@ public class ObjectAdapter extends BaseAdapter {
         viewHolder.imageView.setLayoutParams(lp);
         viewHolder.nameView.setText(p.name1);
         viewHolder.nameView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, size);
-        viewHolder.dayView.setText(p.days + " ");
 
-        viewHolder.dayView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, size);
 
         return convertView;
     }
 
     private class ViewHolder {
         final ImageView imageView;
-        final TextView nameView, dayView;
+        final TextView nameView;
 
         ViewHolder(View view) {
             imageView = (ImageView) view.findViewById(R.id.image);
             nameView = (TextView) view.findViewById(R.id.text);
-            dayView = (TextView) view.findViewById(R.id.textday);
+
         }
 
     }
