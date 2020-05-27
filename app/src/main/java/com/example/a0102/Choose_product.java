@@ -243,7 +243,6 @@ public class Choose_product extends Fragment implements AdapterView.OnItemClickL
         mInputSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                productss.clear();
                 sort.clear();
                 search=  mInputSearch.getText().toString().toLowerCase().trim();
                 if(search!="") {
